@@ -640,6 +640,7 @@ lb1:
                 if (CheckFliNum(Fnum))
                 {
                     //system("cls");
+                lb5:
                     cout << "\n*****************请选择您要修改或删除的操作*****************\n";
                     cout << "\n\t\t1.删除航班\n\n";
                     cout << "\t\t2.修改航班起飞城市\n\n";
@@ -663,52 +664,52 @@ lb1:
 
                     case '2':
                         ModifyDepartC(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '3':
                         ModifyLandC(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '4':
                         ModifyCraft(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '5':
                         ModifyPrice(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '6':
                         ModifyTime(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '7':
                         ModifyFliNo(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '8':
                         ModifySeats(Fnum);
-                        cout << "\n修改成功！正在返回管理员菜单...";
+                        cout << "\n修改成功！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
 
                     case '9': //返回上一步
                         system("cls");
@@ -718,7 +719,7 @@ lb1:
                         cout << "\n请输入正确选择！";
                         sleepcp(1 * 1000);
                         system("cls");
-                        goto lb3;
+                        goto lb5;
                     }
                 }
                 //如果航班序号输入有误，回到之前
