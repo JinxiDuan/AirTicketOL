@@ -16,8 +16,8 @@
 
 using namespace std;
 
-void sleepcp(int milliseconds)
-{ //跨平台sleep函数
+void sleepcp(int milliseconds) //跨平台sleep函数
+{
 #ifdef _WIN32
     Sleep(milliseconds);
 #else
@@ -210,13 +210,18 @@ public:
 class Customer
 {
 private:
-    string username;
-    string password;
+    char username[20];
+    char password[20];
 
 public:
-    bool Checkusername(string name)
+    Customer() {}
+    Customer(string name, string passw)
     {
-        //用户查重
+        strcpy(username, name.c_str());
+        strcpy(password, passw.c_str());
+    } //注册之前要检测用户名与密码长度是否合规
+    bool Checkusername(string name)
+    { //用户查重
         if (name == username)
             return true;
         else
@@ -239,7 +244,7 @@ public:
         }
         else
         {
-            password = newpswd;
+            strcpy(password, newpswd.c_str());
             return OK;
         }
     }
@@ -252,7 +257,7 @@ public:
         }
         else
         {
-            username = name;
+            strcpy(username, name.c_str());
             return OK;
         }
     }
@@ -526,6 +531,69 @@ Status ModifySeats(int n)
     return OK;
 }
 
+bool CheckSameName(string name, int &loca)
+{
+    int n;
+    Customer cus;
+    fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
+    user.seekg(0, ios::beg);
+    user.read((char *)&n, sizeof(int));
+    if (n == 0)
+    {
+        user.close();
+        return false;
+    }
+    else
+    {
+        for (int i = 0; i < n; i++)
+        {
+            user.read((char *)&cus, sizeof(cus));
+            if (cus.Checkusername(name))
+            {
+                loca = i;
+                user.close();
+                return true;
+            }
+        }
+        user.close();
+        return false;
+    }
+}
+
+Status RegisterUser(string name, string password)
+{
+    int i = 0;
+    Customer cus(name, password);
+    fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
+    user.seekg(0, ios::beg);
+    user.read((char *)&i, sizeof(int));
+
+    user.seekg(((sizeof(int)) + (i * sizeof(Customer))), ios::beg);
+    user.write((char *)&cus, sizeof(Customer)); //写入用户
+
+    i++;
+    user.seekg(0, ios::beg);
+    user.write((char *)&i, sizeof(int)); //用户数加一
+    user.close();
+    return OK;
+} //注册之前要检测用户名与密码长度是否合规
+
+bool Login(int n, string password)
+{
+    Customer cuser;
+    fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
+    user.seekg(((sizeof(int)) + (n * sizeof(Customer))), ios::beg);
+    user.read((char *)&cuser, sizeof(Customer));
+    if (cuser.Checkpassword(password))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 static void inputPassword(string &str, int size)
 {
     //隐藏密码实现
@@ -567,27 +635,27 @@ static void inputPassword(string &str, int size)
     cout << endl;
 }
 
-void book()
-{ //订票菜单
+void book() //订票菜单
+{
     cout << "\n请输入需要订票的序号：";
     //cin>>xxx
     /* code */
-    if (true /* code */)
-    { //有余票
+    if (true /* code */) //有余票
+    {
         /* code */
         cout << "\n订票成功!";
     }
-    else
-    { //无余票
+    else //无余票
+    {
         cout << "\n为您推荐以下同起降城市航班：\n\n";
         /* code */
     }
 }
 
-void ui()
-{ //菜单UI
+void ui() //菜单UI
+{
 
-    int Fnum = 0;
+    int Fnum = 0, posi1 = 0, posi2 = 0, lastposi = 0;
     char m, n, p, q, i, j, k;
     string Nam, newNam;
     string Passwd, newPasswd;
@@ -617,8 +685,8 @@ lb1:
         cout << "\n请输入管理员密码：（默认6个6）"; //输入管理员默认密码666666
         inputPassword(Passwd, 6);
 
-        if (Passwd == defAdmPasswd)
-        { //密码正确
+        if (Passwd == defAdmPasswd) //密码正确
+        {
             cout << "\n登录成功！正在进入管理员菜单...\n\n";
             sleepcp(1000);
             system("cls"); //清屏
@@ -635,7 +703,7 @@ lb1:
             {
             case '1':
                 //打印所有航班信息
-                if (ShowAllFli() == -1)
+                   if (ShowAllFli() == -1)
                 {
                     cout << "无航班信息！请重新输入。";
                     sleepcp(2000);
@@ -649,7 +717,7 @@ lb1:
 
                 if (CheckFliNum(Fnum))
                 {
-                    //system("cls");
+                //system("cls");
                 lb5:
                     cout << "\n*****************请选择您要修改或删除的操作*****************\n";
                     cout << "\n\t\t1.删除航班\n\n";
@@ -760,8 +828,8 @@ lb1:
                 goto lb3;
             }
         }
-        else
-        { //密码错误
+        else //密码错误
+        {
             cout << "\n密码错误！ 请重新登录！\n";
             sleepcp(2000);
             system("cls");
@@ -782,36 +850,59 @@ lb1:
         switch (n)
         {
         case '1':
+        ReRegis:
             cout << "\n请输入新用户名:";
             cin >> newNam;
+            if (CheckSameName(newNam, posi1))
+            {
+                cout << "账户已存在，请选择1.直接登录或2.更换用户名：";
+                int Choice = 0;
+                cin >> Choice;
+                if (Choice == 1)
+                {
+                    lastposi = posi1;
+                    goto DirecLog;
+                }
+                else
+                {
+                    goto ReRegis;
+                }
+            }
             cout << "\n请输入新密码:";
-            inputPassword(newPasswd, 6);
-            //写入用户信息到文件中
-            /* code */
+            inputPassword(newPasswd, 20);
+            RegisterUser(newNam, newPasswd);
             cout << "\n注册成功！正在返回乘客登录界面。\n";
             sleepcp(3000);
             system("cls");
             goto lb2;
 
         case '2':
+        Relog:
             cout << "\n请输入用户名:";
             cin >> Nam;
             //查找文件是否有此人用户名，有则继续
             /* code */
-            if (false /* code */)
-            { //如果没有该用户名则打印未注册，并回到之前
-                cout << "\n该用户未注册！请重新登录。";
-                sleepcp(1 * 1000);
-                system("cls");
-                goto lb2;
+            if (!CheckSameName(Nam, posi2)) //如果没有该用户名则打印未注册，并回到之前
+            {
+                cout << "\n该用户未注册！请选择1.注册新账号或2.重新输入用户名：";
+                int Choi2 = 0;
+                cin >> Choi2;
+                if (Choi2 == 1)
+                {
+                    goto ReRegis;
+                }
+                else
+                {
+                    goto Relog;
+                }
             }
-
+        DirecLog:
             cout << "\n请输入密码:";
             inputPassword(Passwd, 6);
             //判断密码正误
             /* code */
-            if (true /* code */)
-            { //如果密码正确，则登录成功
+            if (Login(lastposi, Passwd)) //如果密码正确，则登录成功
+            {
                 cout << "\n登录成功！\n\n";
                 sleepcp(1 * 1000);
                 system("cls");
@@ -839,8 +930,8 @@ lb1:
                     case '1':
                         cout << "\n请输入航班号：";
                         //cin >> xxx;
-                        if (true /* code */)
-                        { //可以查找到相关信息
+                        if (true /* code */) //可以查找到相关信息
+                        {
                             cout << "\n查找到以下航班信息：\n\n";
                             //显示相关航班
                             /* code */
@@ -858,8 +949,8 @@ lb1:
                     case '2':
                         cout << "\n请输入起飞和降落城市：";
                         //cin >> xxx;
-                        if (true /* code */)
-                        { //可以查找到相关信息
+                        if (true /* code */) //可以查找到相关信息
+                        {
                             cout << "\n查找到以下航班信息：\n\n";
                             //显示相关航班
                             /* code */
@@ -877,8 +968,8 @@ lb1:
                     case '3':
                         cout << "\n请输入城市：";
                         //cin >> xxx;
-                        if (true /* code */)
-                        { //可以查找到相关信息
+                        if (true /* code */) //可以查找到相关信息
+                        {
                             cout << "\n查找到以下航班信息：\n\n";
                             //显示相关航班
                             /* code */
@@ -940,8 +1031,8 @@ lb1:
                     goto lb4;
                 }
             }
-            else
-            { //如果密码错误，则返回
+            else //如果密码错误，则返回
+            {
                 cout << "\n密码错误！请重新登录。";
                 goto lb2;
             }
@@ -971,7 +1062,7 @@ lb1:
 
 int main()
 {
-    int NumOfFlight = 0;
+    int NumOfFlight = 0, NumOfUsers = 0;
     fstream flightinfo("flinfo.dat", ios::in | ios::out | ios::binary);
     if (!flightinfo)
     {
@@ -985,6 +1076,19 @@ int main()
         flightinfo.write((char *)&NumOfFlight, sizeof(int));
     }
     flightinfo.close();
+
+    fstream userinfo("userinfo.dat", ios::in | ios::out | ios::binary);
+    if (!userinfo)
+    {
+        userinfo.open("userinfo.dat", ios::out);
+        userinfo.close();
+        userinfo.open("userinfo.dat", ios::in | ios::out | ios::binary);
+    }
+    if (IfEmptyFile(userinfo))
+    {
+        userinfo.write((char *)&NumOfUsers, sizeof(int));
+    }
+    userinfo.close();
 
     ui();
 
