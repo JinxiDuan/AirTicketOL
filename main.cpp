@@ -16,8 +16,8 @@
 
 using namespace std;
 
-void sleepcp(int milliseconds) //跨平台sleep函数
-{
+void sleepcp(int milliseconds)
+{ //跨平台sleep函数
 #ifdef _WIN32
     Sleep(milliseconds);
 #else
@@ -215,7 +215,8 @@ private:
 
 public:
     bool Checkusername(string name)
-    { //用户查重
+    {
+        //用户查重
         if (name == username)
             return true;
         else
@@ -321,21 +322,25 @@ Status AddFlight()
     return OK;
 }
 
-Status ShowAllFli() {
+Status ShowAllFli()
+{
     Flight fli2;
-    int NumOfFly=0;
-    ifstream infile("flinfo.dat", ios::binary|ios::in);
-    if (!infile) {
+    int NumOfFly = 0;
+    ifstream infile("flinfo.dat", ios::binary | ios::in);
+    if (!infile)
+    {
         cerr << "打开出错!" << endl;
         abort();
     }
     infile.seekg(0, ios::beg);
-    infile.read((char *) &NumOfFly, sizeof(int));
-    if(NumOfFly==0)
-        return ERROR;
-    infile.seekg(sizeof(int),ios::beg);
-    for (int i = 0; i < NumOfFly; i++) {
-        infile.read((char *) &fli2, sizeof(Flight));
+    infile.read((char *)&NumOfFly, sizeof(int));
+    if (NumOfFly == 0)
+        return ABNORMAL;
+    infile.seekg(sizeof(int), ios::beg);
+    cout << "\n所有航班信息如下：\n\n";
+    for (int i = 0; i < NumOfFly; i++)
+    {
+        infile.read((char *)&fli2, sizeof(Flight));
         cout << "   " << i + 1 << ".  ";
         fli2.Display();
     }
@@ -562,25 +567,25 @@ static void inputPassword(string &str, int size)
     cout << endl;
 }
 
-void book() //订票菜单
-{
+void book()
+{ //订票菜单
     cout << "\n请输入需要订票的序号：";
     //cin>>xxx
     /* code */
-    if (true /* code */) //有余票
-    {
+    if (true /* code */)
+    { //有余票
         /* code */
         cout << "\n订票成功!";
     }
-    else //无余票
-    {
+    else
+    { //无余票
         cout << "\n为您推荐以下同起降城市航班：\n\n";
         /* code */
     }
 }
 
-void ui() //菜单UI
-{
+void ui()
+{ //菜单UI
 
     int Fnum = 0;
     char m, n, p, q, i, j, k;
@@ -591,11 +596,11 @@ void ui() //菜单UI
 lb1:
     cout << endl;
     cout << "          @@     @@      @@    @@@@@@@@@    @@@@@@@@@@\n";
-    cout << "          @@     @@      @@    @@           @@       \n";
-    cout << "          @@     @@      @@    @@           @@       \n";
-    cout << "          @@     @@      @@    @@@@@@@@@    @@@@@@@@@\n";
-    cout << "          @@     @@      @@    @@           @@       \n";
-    cout << "    @@    @@      @@    @@     @@           @@       \n";
+    cout << "          @@     @@      @@    @@           @@        \n";
+    cout << "          @@     @@      @@    @@           @@        \n";
+    cout << "          @@     @@      @@    @@@@@@@@@    @@@@@@@@@ \n";
+    cout << "          @@     @@      @@    @@           @@        \n";
+    cout << "    @@    @@      @@    @@     @@           @@        \n";
     cout << "     @@@@@@        @@@@@@      @@           @@@@@@@@@@\n";
     cout << "\n               欢迎进入酱菜航空订票系统！\n";
     cout << "\n********************请选择用户身份********************\n";
@@ -612,8 +617,8 @@ lb1:
         cout << "\n请输入管理员密码：（默认6个6）"; //输入管理员默认密码666666
         inputPassword(Passwd, 6);
 
-        if (Passwd == defAdmPasswd) //密码正确
-        {
+        if (Passwd == defAdmPasswd)
+        { //密码正确
             cout << "\n登录成功！正在进入管理员菜单...\n\n";
             sleepcp(1000);
             system("cls"); //清屏
@@ -629,9 +634,14 @@ lb1:
             switch (p)
             {
             case '1':
-                cout << "\n所有航班信息如下：\n\n";
                 //打印所有航班信息
-                ShowAllFli();
+                if (ShowAllFli() == -1)
+                {
+                    cout << "无航班信息！请重新输入。";
+                    sleepcp(2000);
+                    system("cls");
+                    goto lb3;
+                }
 
                 cout << "\n请输如需要进行操作的序号：";
                 //int Fnum = 0;
@@ -750,8 +760,8 @@ lb1:
                 goto lb3;
             }
         }
-        else //密码错误
-        {
+        else
+        { //密码错误
             cout << "\n密码错误！ 请重新登录！\n";
             sleepcp(2000);
             system("cls");
@@ -788,8 +798,8 @@ lb1:
             cin >> Nam;
             //查找文件是否有此人用户名，有则继续
             /* code */
-            if (false /* code */) //如果没有该用户名则打印未注册，并回到之前
-            {
+            if (false /* code */)
+            { //如果没有该用户名则打印未注册，并回到之前
                 cout << "\n该用户未注册！请重新登录。";
                 sleepcp(1 * 1000);
                 system("cls");
@@ -800,8 +810,8 @@ lb1:
             inputPassword(Passwd, 6);
             //判断密码正误
             /* code */
-            if (true /* code */) //如果密码正确，则登录成功
-            {
+            if (true /* code */)
+            { //如果密码正确，则登录成功
                 cout << "\n登录成功！\n\n";
                 sleepcp(1 * 1000);
                 system("cls");
@@ -829,8 +839,8 @@ lb1:
                     case '1':
                         cout << "\n请输入航班号：";
                         //cin >> xxx;
-                        if (true /* code */) //可以查找到相关信息
-                        {
+                        if (true /* code */)
+                        { //可以查找到相关信息
                             cout << "\n查找到以下航班信息：\n\n";
                             //显示相关航班
                             /* code */
@@ -848,8 +858,8 @@ lb1:
                     case '2':
                         cout << "\n请输入起飞和降落城市：";
                         //cin >> xxx;
-                        if (true /* code */) //可以查找到相关信息
-                        {
+                        if (true /* code */)
+                        { //可以查找到相关信息
                             cout << "\n查找到以下航班信息：\n\n";
                             //显示相关航班
                             /* code */
@@ -867,8 +877,8 @@ lb1:
                     case '3':
                         cout << "\n请输入城市：";
                         //cin >> xxx;
-                        if (true /* code */) //可以查找到相关信息
-                        {
+                        if (true /* code */)
+                        { //可以查找到相关信息
                             cout << "\n查找到以下航班信息：\n\n";
                             //显示相关航班
                             /* code */
@@ -930,8 +940,8 @@ lb1:
                     goto lb4;
                 }
             }
-            else //如果密码错误，则返回
-            {
+            else
+            { //如果密码错误，则返回
                 cout << "\n密码错误！请重新登录。";
                 goto lb2;
             }
