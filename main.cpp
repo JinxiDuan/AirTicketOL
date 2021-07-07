@@ -321,27 +321,26 @@ Status AddFlight()
     return OK;
 }
 
-void ShowAllFli()
-{
+Status ShowAllFli() {
     Flight fli2;
-    int NumOfFly = 0;
-    ifstream infile("flinfo.dat", ios::binary | ios::in);
-    if (!infile)
-    {
+    int NumOfFly=0;
+    ifstream infile("flinfo.dat", ios::binary|ios::in);
+    if (!infile) {
         cerr << "打开出错!" << endl;
         abort();
     }
     infile.seekg(0, ios::beg);
-    infile.read((char *)&NumOfFly, sizeof(int));
-    infile.seekg(sizeof(int), ios::beg);
-    for (int i = 0; i < NumOfFly; i++)
-    {
-        infile.read((char *)&fli2, sizeof(Flight));
+    infile.read((char *) &NumOfFly, sizeof(int));
+    if(NumOfFly==0)
+        return ERROR;
+    infile.seekg(sizeof(int),ios::beg);
+    for (int i = 0; i < NumOfFly; i++) {
+        infile.read((char *) &fli2, sizeof(Flight));
         cout << "   " << i + 1 << ".  ";
         fli2.Display();
-        cout << endl;
     }
     infile.close();
+    return OK;
 }
 
 bool IfEmptyFile(fstream &fstest)
