@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void sleepcp(int milliseconds) //Ë∑®Âπ≥Âè∞sleepÂáΩÊï∞
+void sleepcp(int milliseconds) //øÁ∆ΩÃ®sleep∫Ø ˝
 {
 #ifdef _WIN32
     Sleep(milliseconds);
@@ -30,8 +30,7 @@ void sleepcp(int milliseconds) //Ë∑®Âπ≥Âè∞sleepÂáΩÊï∞
 #define MAXSIZE 100
 typedef int Status;
 
-class Flight
-{
+class Flight {
 private:
     char FlightNo[50];
     char CraftType[50];
@@ -46,306 +45,269 @@ public:
     Flight() {}
 
     Flight(string No, string CraftT, string Departc, string Arrivc, string DepartT, string ArrivT, int SeatsN,
-           double Pri)
-    {
-        strcpy(FlightNo, No.c_str());
-        strcpy(CraftType, CraftT.c_str());
-        strcpy(Departcity, Departc.c_str());
-        strcpy(Arrivcity, Arrivc.c_str());
-        strcpy(DepartTime, DepartT.c_str());
-        strcpy(ArrivTime, ArrivT.c_str());
+           double Pri) {
+        strcpy_s(FlightNo, No.c_str());
+        strcpy_s(CraftType, CraftT.c_str());
+        strcpy_s(Departcity, Departc.c_str());
+        strcpy_s(Arrivcity, Arrivc.c_str());
+        strcpy_s(DepartTime, DepartT.c_str());
+        strcpy_s(ArrivTime, ArrivT.c_str());
         SeatsNum = SeatsN;
         Price = Pri;
     }
 
-    void Display()
-    {
-        cout << FlightNo << "  " << Departcity << "Âà∞" << Arrivcity << "  Ëµ∑È£ûÔºö" << DepartTime << "  ËêΩÂú∞Ôºö" << ArrivTime
-             << "  ÊâßÈ£ûÔºö" << CraftType << "  ‰ΩôÁ•®Ôºö" << SeatsNum << "  " << Price << "ÂÖÉ" << endl;
+    void Display() {
+        cout << FlightNo << "  " << Departcity << "µΩ" << Arrivcity << "  ∆∑…£∫" << DepartTime << "  ¬‰µÿ£∫" << ArrivTime
+             << "  ÷¥∑…£∫" << CraftType << "  ”‡∆±£∫" << SeatsNum << "  " << Price << "‘™" << endl;
     }
 
-    bool IfFlightNo(string Num)
-    {
+    bool IfFlightNo(string Num) {
         if (FlightNo == Num)
             return true;
         else
             return false;
     }
 
-    Status ChangeFlightNo(string Num)
-    {
-        if (Num.empty())
-        {
+    Status ChangeFlightNo(string Num) {
+        if (Num.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(FlightNo, Num.c_str());
+        } else {
+            strcpy_s(FlightNo, Num.c_str());
             return OK;
         }
     }
 
-    bool IfDepartCity(string City)
-    {
+    char *ReturnFliNO() {
+        return FlightNo;
+    }
+
+    bool IfDepartCity(string City) {
         if (Departcity == City)
             return true;
         else
             return false;
     }
 
-    Status ChangeDepartC(string City)
-    {
-        if (City.empty())
-        {
+    Status ChangeDepartC(string City) {
+        if (City.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(Departcity, City.c_str());
+        } else {
+            strcpy_s(Departcity, City.c_str());
             return OK;
         }
     }
 
-    bool IfArrivCity(string City)
-    {
-        if (Arrivcity == City)
-        {
+    bool IfArrivCity(string City) {
+        if (Arrivcity == City) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
-    Status ChangeArrivC(string City)
-    {
-        if (City.empty())
-        {
+    Status ChangeArrivC(string City) {
+        if (City.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(Arrivcity, City.c_str());
+        } else {
+            strcpy_s(Arrivcity, City.c_str());
             return OK;
         }
     }
 
-    Status ChangeDepartT(string Time)
-    {
-        if (Time.empty())
-        {
+    Status ChangeDepartT(string Time) {
+        if (Time.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(DepartTime, Time.c_str());
+        } else {
+            strcpy_s(DepartTime, Time.c_str());
             return true;
         }
     }
 
-    Status ChangeArrivalT(string Time)
-    {
-        if (Time.empty())
-        {
+    Status ChangeArrivalT(string Time) {
+        if (Time.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(ArrivTime, Time.c_str());
+        } else {
+            strcpy_s(ArrivTime, Time.c_str());
             return OK;
         }
     }
 
-    Status ChangeCraftT(string craftT)
-    {
-        if (craftT.empty())
-        {
+    Status ChangeCraftT(string craftT) {
+        if (craftT.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(CraftType, craftT.c_str());
+        } else {
+            strcpy_s(CraftType, craftT.c_str());
             return OK;
         }
     }
 
-    Status ChangeSeatNum(int seats)
-    {
-        if (seats < 0)
-        {
+    Status ChangeSeatNum(int seats) {
+        if (seats < 0) {
             return ABNORMAL;
-        }
-        else
-        {
+        } else {
             SeatsNum = seats;
             return OK;
         }
     }
 
-    void Seatsplus()
-    {
+    void Seatsplus() {
         SeatsNum++;
     }
 
-    void Saeatsdec()
-    {
+    void Saeatsdec() {
         SeatsNum--;
     }
 
-    Status ChangePrice(double price)
-    {
-        if (price < 0)
-        {
+    int ReturnSeats() {
+        return SeatsNum;
+    }
+
+    char *ReturnDepartC() {
+        return Departcity;
+    }
+
+    char *ReturnArrivC() {
+        return Arrivcity;
+    }
+
+
+    Status ChangePrice(double price) {
+        if (price < 0) {
             return ABNORMAL;
-        }
-        else
-        {
+        } else {
             Price = price;
             return OK;
         }
     }
 };
 
-class Customer
-{
+class Customer {
 private:
     char username[20];
     char password[20];
 
 public:
     Customer() {}
-    Customer(string name, string passw)
-    {
-        strcpy(username, name.c_str());
-        strcpy(password, passw.c_str());
-    } //Ê≥®ÂÜå‰πãÂâçË¶ÅÊ£ÄÊµãÁî®Êà∑Âêç‰∏éÂØÜÁ†ÅÈïøÂ∫¶ÊòØÂê¶ÂêàËßÑ
-    bool Checkusername(string name)
-    { //Áî®Êà∑Êü•Èáç
+
+    Customer(string name, string passw) {
+        strcpy_s(username, name.c_str());
+        strcpy_s(password, passw.c_str());
+    } //◊¢≤·÷Æ«∞“™ºÏ≤‚”√ªß√˚”Î√‹¬Î≥§∂» «∑Ò∫œπÊ
+    bool Checkusername(string name) { //”√ªß≤È÷ÿ
         if (name == username)
             return true;
         else
             return false;
     }
 
-    bool Checkpassword(string passw)
-    {
+    bool Checkpassword(string passw) {
         if (passw == password)
             return true;
         else
+
             return false;
     }
 
-    Status Changepasswrd(string newpswd)
-    {
-        if (newpswd.empty())
-        {
+    Status Changepasswrd(string newpswd) {
+        if (newpswd.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(password, newpswd.c_str());
+        } else {
+            strcpy_s(password, newpswd.c_str());
             return OK;
         }
     }
 
-    Status ChangeUsername(string name)
-    {
-        if (name.empty())
-        {
+    Status ChangeUsername(string name) {
+        if (name.empty()) {
             return ABNORMAL;
-        }
-        else
-        {
-            strcpy(username, name.c_str());
+        } else {
+            strcpy_s(username, name.c_str());
             return OK;
         }
     }
 };
 
-typedef struct BookInfo
-{
-    string Username;
-    string *FliNo = new string[MAXSIZE];
+typedef struct TicketsperFli {
+    char FliNumber[20];
+    int Tickets;
+} TPF;
+
+typedef struct BookInfo {
+    char Username[20];
+    TPF tpf[MAXSIZE];
+    int NumOfTPF;
 };
 
-Status AddFlight()
-{
+Status AddFlight() {
     string FlightN, craftT, Departc, Arrivc, DepartT, ArrivT;
     int SeatsN = 0;
     double Pri = 0;
-    cout << "ËØ∑ËæìÂÖ•Ëà™Áè≠Âè∑Ôºö";
+    cout << "«Î ‰»Î∫Ω∞‡∫≈£∫";
     cin >> FlightN;
 
-    cout << "ËØ∑ËæìÂÖ•Ëµ∑È£ûÂüéÂ∏ÇÔºö";
+    cout << "«Î ‰»Î∆∑…≥« –£∫";
     cin >> Departc;
 
-    cout << "ËØ∑ËæìÂÖ•ÈôçËêΩÂüéÂ∏ÇÔºö";
+    cout << "«Î ‰»ÎΩµ¬‰≥« –£∫";
     cin >> Arrivc;
 
-    cout << "ËØ∑ËæìÂÖ•Ëµ∑È£ûÊó∂Èó¥Ôºö";
+    cout << "«Î ‰»Î∆∑… ±º‰£∫";
     cin >> DepartT;
 
-    cout << "ËØ∑ËæìÂÖ•Âà∞ËææÊó∂Èó¥Ôºö";
+    cout << "«Î ‰»ÎµΩ¥Ô ±º‰£∫";
     cin >> ArrivT;
 
-    cout << "ËØ∑ËæìÂÖ•ÊâßÈ£ûÊú∫ÂûãÔºö";
+    cout << "«Î ‰»Î÷¥∑…ª˙–Õ£∫";
     cin >> craftT;
 
-    cout << "ËØ∑ËæìÂÖ•Â∫ß‰ΩçÊï∞Ôºö";
+    cout << "«Î ‰»Î◊˘Œª ˝£∫";
     cin >> SeatsN;
 
-    cout << "ËØ∑ËæìÂÖ•Á•®‰ª∑Ôºö";
+    cout << "«Î ‰»Î∆±º€£∫";
     cin >> Pri;
 
     Flight fli1(FlightN, craftT, Departc, Arrivc, DepartT, ArrivT, SeatsN, Pri);
 
     fstream outfile("flinfo.dat", ios::binary | ios::out | ios::in);
-    if (!outfile)
-    {
-        cerr << "ÊâìÂºÄÂá∫Èîô!" << endl;
-        abort(); //Ëã•Êñá‰ª∂‰∏çÂ≠òÂú®ÊàñÊñá‰ª∂Êª°
+    if (!outfile) {
+        cerr << "¥Úø™≥ˆ¥Ì!" << endl;
+        abort(); //»ÙŒƒº˛≤ª¥Ê‘⁄ªÚŒƒº˛¬˙
     }
 
     int i = 0;
     outfile.seekg(0, ios::beg);
-    outfile.read((char *)&i, sizeof(int));
+    outfile.read((char *) &i, sizeof(int));
     outfile.seekg(((sizeof(int)) + (i * sizeof(Flight))), ios::beg);
 
-    fli1.Display(); //ÂèØÂà†Èô§
-    outfile.write((char *)&fli1, sizeof(fli1));
+    fli1.Display(); //ø……æ≥˝
+    outfile.write((char *) &fli1, sizeof(fli1));
 
-    cout << "‰πãÂâç" << i << endl; //ÂèØÂà†Èô§
     i++;
     outfile.seekg(0, ios::beg);
-    outfile.write((char *)&i, sizeof(int)); //Ëà™Áè≠Êï∞Âä†1
+    outfile.write((char *) &i, sizeof(int)); //∫Ω∞‡ ˝º”1
     outfile.seekg(0, ios::beg);
-    outfile.read((char *)&i, sizeof(int));
-    cout << "‰πãÂêé" << i << endl; //ÂèØÂà†Èô§
+    outfile.read((char *) &i, sizeof(int));
 
     outfile.close();
     return OK;
 }
 
-Status ShowAllFli()
-{
+Status ShowAllFli() {
     Flight fli2;
     int NumOfFly = 0;
     ifstream infile("flinfo.dat", ios::binary | ios::in);
-    if (!infile)
-    {
-        cerr << "ÊâìÂºÄÂá∫Èîô!" << endl;
+    if (!infile) {
+        cerr << "¥Úø™≥ˆ¥Ì!" << endl;
         abort();
     }
     infile.seekg(0, ios::beg);
-    infile.read((char *)&NumOfFly, sizeof(int));
+    infile.read((char *) &NumOfFly, sizeof(int));
     if (NumOfFly == 0)
         return ABNORMAL;
     infile.seekg(sizeof(int), ios::beg);
-    cout << "\nÊâÄÊúâËà™Áè≠‰ø°ÊÅØÂ¶Ç‰∏ãÔºö\n\n";
-    for (int i = 0; i < NumOfFly; i++)
-    {
-        infile.read((char *)&fli2, sizeof(Flight));
+    cout << "\nÀ˘”–∫Ω∞‡–≈œ¢»Áœ¬£∫\n\n";
+    for (int i = 0; i < NumOfFly; i++) {
+        infile.read((char *) &fli2, sizeof(Flight));
         cout << "   " << i + 1 << ".  ";
         fli2.Display();
     }
@@ -353,8 +315,7 @@ Status ShowAllFli()
     return OK;
 }
 
-bool IfEmptyFile(fstream &fstest)
-{
+bool IfEmptyFile(fstream &fstest) {
     int i;
     fstest.seekg(0, ios::end);
     i = fstest.tellg();
@@ -364,11 +325,10 @@ bool IfEmptyFile(fstream &fstest)
         return false;
 }
 
-bool CheckFliNum(int n)
-{
+bool CheckFliNum(int n) {
     int i = 0;
     ifstream infile("flinfo.dat", ios::in | ios::binary);
-    infile.read((char *)&i, sizeof(int));
+    infile.read((char *) &i, sizeof(int));
     infile.close();
     if (n <= i)
         return true;
@@ -376,180 +336,161 @@ bool CheckFliNum(int n)
         return false;
 }
 
-Status DeleteFli(int n)
-{
+Status DeleteFli(int n) {
     int i = 0, temp = 0;
     Flight *fli, flileft;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
-    fsfile.read((char *)&i, sizeof(int));
+    fsfile.read((char *) &i, sizeof(int));
     i--;
     fsfile.seekg(0, ios::beg);
-    fsfile.write((char *)&i, sizeof(int)); //‰ΩøÂæó‰øùÂ≠òÂú®Êñá‰ª∂‰∏≠ËÆ∞ÂΩïËà™Áè≠Êï∞ÈáèÁöÑintÁ±ªÂûãÂáè‰∏Ä
-    if ((i + 1) == n)
-    {
+    fsfile.write((char *) &i, sizeof(int)); // πµ√±£¥Ê‘⁄Œƒº˛÷–º«¬º∫Ω∞‡ ˝¡øµƒint¿‡–Õºı“ª
+    if ((i + 1) == n) {
         fsfile.close();
         return OK;
-    }
-    else
-    {
+    } else {
         fli = new Flight[i + 1];
         fsfile.seekg(sizeof(int), ios::beg);
 
-        for (int k = 0; k < i + 1; k++)
-        {
-            fsfile.read((char *)&fli[temp], sizeof(Flight));
+        for (int k = 0; k < i + 1; k++) {
+            fsfile.read((char *) &fli[temp], sizeof(Flight));
             temp++;
-        } //Â∞ÜÊï¥‰∏™Â∫èÂàóËØªÂèñÂà∞Êï∞ÁªÑ‰∏≠
+        } //Ω´’˚∏ˆ–Ú¡–∂¡»°µΩ ˝◊È÷–
 
         fsfile.seekg(sizeof(int), ios::beg);
 
-        for (int j = 0; j < i + 1; j++)
-        {
+        for (int j = 0; j < i + 1; j++) {
             //fli[j].Display();
             if (j == n - 1)
                 continue;
-            fsfile.write((char *)&fli[j], sizeof(Flight));
-        }               //Â∞ÜÊï∞ÁªÑ‰∏≠ÁöÑÊï∞ÊçÆÊà™Êñ≠ËæìÂÖ•Âà∞Êñá‰ª∂‰∏≠
-        delete[] fli;   //ÈáäÊîæ‰∏¥Êó∂Êï∞ÁªÑ
-        fsfile.close(); //ÂÖ≥Èó≠Êñá‰ª∂
+            fsfile.write((char *) &fli[j], sizeof(Flight));
+        }               //Ω´ ˝◊È÷–µƒ ˝æ›Ωÿ∂œ ‰»ÎµΩŒƒº˛÷–
+        delete[] fli;   // Õ∑≈¡Ÿ ± ˝◊È
+        fsfile.close(); //πÿ±’Œƒº˛
         return OK;
     }
 }
 
-Status ModifyDepartC(int n)
-{
+Status ModifyDepartC(int n) {
     Flight fli2;
     string DepartC;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•ÈúÄË¶ÅÊõøÊç¢‰∏∫ÁöÑËµ∑È£ûÂüéÂ∏Ç:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î–Ë“™ÃÊªªŒ™µƒ∆∑…≥« –:";
     cin >> DepartC;
     fli2.ChangeDepartC(DepartC);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-Status ModifyLandC(int n)
-{
+Status ModifyLandC(int n) {
     Flight fli2;
     string LandC;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•ÈúÄË¶ÅÊõøÊç¢‰∏∫ÁöÑÈôçËêΩÂüéÂ∏Ç:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î–Ë“™ÃÊªªŒ™µƒΩµ¬‰≥« –:";
     cin >> LandC;
     fli2.ChangeArrivC(LandC);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-Status ModifyCraft(int n)
-{
+Status ModifyCraft(int n) {
     Flight fli2;
     string CraftT;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•ÈúÄË¶ÅÊõøÊç¢‰∏∫ÁöÑÊâßÈ£ûÊú∫Âûã:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î–Ë“™ÃÊªªŒ™µƒ÷¥∑…ª˙–Õ:";
     cin >> CraftT;
     fli2.ChangeCraftT(CraftT);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-Status ModifyPrice(int n)
-{
+Status ModifyPrice(int n) {
     Flight fli2;
     double Pri;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•Êõ¥ÊîπÂêéÁöÑ‰ª∑Ê†º:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î∏¸∏ƒ∫Ûµƒº€∏Ò:";
     cin >> Pri;
     fli2.ChangePrice(Pri);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-Status ModifyTime(int n)
-{
+Status ModifyTime(int n) {
     Flight fli2;
     string DepartT, ArrivT;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•Êõ¥ÊîπÂêéÁöÑÁöÑËµ∑È£ûÊó∂Èó¥:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î∏¸∏ƒ∫Ûµƒµƒ∆∑… ±º‰:";
     cin >> DepartT;
-    cout << "ËØ∑ËæìÂÖ•Êõ¥ÊîπÂêéÁöÑÁöÑÈôçËêΩÊó∂Èó¥:";
+    cout << "«Î ‰»Î∏¸∏ƒ∫ÛµƒµƒΩµ¬‰ ±º‰:";
     cin >> ArrivT;
     fli2.ChangeDepartT(DepartT);
     fli2.ChangeArrivalT(ArrivT);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-Status ModifyFliNo(int n)
-{
+Status ModifyFliNo(int n) {
     Flight fli2;
     string FliNo;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•Êõ¥ÊîπÂêéÁöÑËà™Áè≠Âè∑:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î∏¸∏ƒ∫Ûµƒ∫Ω∞‡∫≈:";
     cin >> FliNo;
     fli2.ChangeFlightNo(FliNo);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-Status ModifySeats(int n)
-{
+Status ModifySeats(int n) {
     Flight fli2;
     int Seats;
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
-    cout << "ËØ∑ËæìÂÖ•Êõ¥ÊîπÂêéÁöÑÂ∫ß‰ΩçÊï∞:";
+    fsfile.read((char *) &fli2, sizeof(Flight));
+    cout << "«Î ‰»Î∏¸∏ƒ∫Ûµƒ◊˘Œª ˝:";
     cin >> Seats;
     fli2.ChangeSeatNum(Seats);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char *) &fli2, sizeof(Flight));
     return OK;
 }
 
-bool CheckSameName(string name, int &loca)
-{
+bool CheckSameName(string name, int &loca) {
     int n;
     Customer cus;
     fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
     user.seekg(0, ios::beg);
-    user.read((char *)&n, sizeof(int));
-    if (n == 0)
-    {
+    user.read((char *) &n, sizeof(int));
+    if (n == 0) {
         user.close();
         return false;
-    }
-    else
-    {
-        for (int i = 0; i < n; i++)
-        {
-            user.read((char *)&cus, sizeof(cus));
-            if (cus.Checkusername(name))
-            {
+    } else {
+        for (int i = 0; i < n; i++) {
+            user.read((char *) &cus, sizeof(cus));
+            if (cus.Checkusername(name)) {
                 loca = i;
                 user.close();
                 return true;
@@ -560,109 +501,422 @@ bool CheckSameName(string name, int &loca)
     }
 }
 
-Status RegisterUser(string name, string password)
-{
+Status RegisterUser(string name, string password) {
     int i = 0;
     Customer cus(name, password);
     fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
     user.seekg(0, ios::beg);
-    user.read((char *)&i, sizeof(int));
+    user.read((char *) &i, sizeof(int));
 
     user.seekg(((sizeof(int)) + (i * sizeof(Customer))), ios::beg);
-    user.write((char *)&cus, sizeof(Customer)); //ÂÜôÂÖ•Áî®Êà∑
+    user.write((char *) &cus, sizeof(Customer)); //–¥»Î”√ªß
 
     i++;
     user.seekg(0, ios::beg);
-    user.write((char *)&i, sizeof(int)); //Áî®Êà∑Êï∞Âä†‰∏Ä
+    user.write((char *) &i, sizeof(int)); //”√ªß ˝º”“ª
     user.close();
     return OK;
-} //Ê≥®ÂÜå‰πãÂâçË¶ÅÊ£ÄÊµãÁî®Êà∑Âêç‰∏éÂØÜÁ†ÅÈïøÂ∫¶ÊòØÂê¶ÂêàËßÑ
+} //◊¢≤·÷Æ«∞“™ºÏ≤‚”√ªß√˚”Î√‹¬Î≥§∂» «∑Ò∫œπÊ
 
-bool Login(int n, string password)
-{
+bool Login(int n, string password) {
     Customer cuser;
     fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
     user.seekg(((sizeof(int)) + (n * sizeof(Customer))), ios::beg);
-    user.read((char *)&cuser, sizeof(Customer));
-    if (cuser.Checkpassword(password))
-    {
+    user.read((char *) &cuser, sizeof(Customer));
+    if (cuser.Checkpassword(password)) {
+        user.close();
         return true;
-    }
-    else
-    {
+    } else {
+        user.close();
         return false;
     }
 }
 
-static void inputPassword(string &str, int size)
-{
-    //ÈöêËóèÂØÜÁ†ÅÂÆûÁé∞
+bool SearchFliNo(string FliNo, int &theposi) {
+    int i;
+    Flight tempfli;
+    fstream fliserch("flinfo.dat", ios::in | ios::out | ios::binary);
+    fliserch.seekg(0, ios::beg);
+    fliserch.read((char *) &i, sizeof(int));
+    for (int j = 0; j <= i; j++) {
+        fliserch.read((char *) &tempfli, sizeof(Flight));
+        if (tempfli.IfFlightNo(FliNo)) {
+            theposi = j;
+            fliserch.close();
+            return true;
+        }
+    }
+    fliserch.close();
+    return false;
+}
+
+bool SearchFliC(string Departc, string Arrivc, int **Fliarr, int &n) {
+    int i = 0;
+    n = 0;
+    Flight tempfli;
+    fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
+    fsfile.seekg(0, ios::beg);
+    fsfile.read((char *) &i, sizeof(int));
+    *Fliarr = new int[i];
+    for (int j = 0; j < i; j++) {
+        fsfile.read((char *) &tempfli, sizeof(Flight));
+        if (tempfli.IfDepartCity(Departc) && tempfli.IfArrivCity(Arrivc)) {
+            *(*Fliarr + n) = j;
+            n++;
+        }
+    }
+    if (n > 0) {
+        fsfile.close();
+        return true;
+    } else {
+        fsfile.close();
+        return false;
+    }
+}
+
+bool SearchFliRC(string City, int **Fliarr, int &n) {
+    int i = 0;
+    n = 0;
+    Flight tempfli;
+    fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
+    fsfile.seekg(0, ios::beg);
+    fsfile.read((char *) &i, sizeof(int));
+    *Fliarr = new int[i];
+    for (int j = 0; j < i; j++) {
+        fsfile.read((char *) &tempfli, sizeof(Flight));
+        if (tempfli.IfDepartCity(City) || tempfli.IfArrivCity(City)) {
+            *(*Fliarr + n) = j;
+            n++;
+        }
+    }
+    if (n > 0) {
+        fsfile.close();
+        return true;
+    } else {
+        fsfile.close();
+        return false;
+    }
+}
+
+void ShowthisFli(int posi, int n) {
+    Flight fli;
+    fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
+    fsfile.seekg((sizeof(int)) + (posi * sizeof(Flight)), ios::beg);
+    fsfile.read((char *) &fli, sizeof(Flight));
+    cout << "  " << n + 1 << ".  ";
+    fli.Display();
+    fsfile.close();
+}
+
+void ShowthisFli(int posi, int n, string fliNo) {
+    Flight fli;
+
+    fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
+
+    fsfile.seekg((sizeof(int)) + (posi * sizeof(Flight)), ios::beg);
+
+    fsfile.read((char *) &fli, sizeof(Flight));
+
+    if (fli.ReturnFliNO() == fliNo) {
+        cout << "  " << n + 1 << ".  ";
+        fli.Display();
+        fsfile.close();
+    } else {
+        return;
+    }
+}
+
+static void inputPassword(string &str, int size) {
+    //“˛≤ÿ√‹¬Î µœ÷
     size++;
     char c;
     int count = 0;
-    char *password = new char[size]; // Âä®ÊÄÅÁî≥ËØ∑Á©∫Èó¥
-    while ((c = getch()) != '\r')
-    {
+    char *password = new char[size]; // ∂ØÃ¨…Í«Îø’º‰
+    while ((c = _getch()) != '\r') {
 
-        if (c == 8)
-        {
-            // ÈÄÄÊ†º
-            if (count == 0)
-            {
+        if (c == 8) {
+            // ÕÀ∏Ò
+            if (count == 0) {
                 continue;
             }
-            putchar('\b'); // ÂõûÈÄÄ‰∏ÄÊ†º
-            putchar(' ');  // ËæìÂá∫‰∏Ä‰∏™Á©∫Ê†ºÂ∞ÜÂéüÊù•ÁöÑ*ÈöêËóè
-            putchar('\b'); // ÂÜçÂõûÈÄÄ‰∏ÄÊ†ºÁ≠âÂæÖËæìÂÖ•
+            putchar('\b'); // ªÿÕÀ“ª∏Ò
+            putchar(' ');  //  ‰≥ˆ“ª∏ˆø’∏ÒΩ´‘≠¿¥µƒ*“˛≤ÿ
+            putchar('\b'); // ‘ŸªÿÕÀ“ª∏Òµ»¥˝ ‰»Î
             count--;
         }
-        if (count == size - 1)
-        {
-            // ÊúÄÂ§ßÈïøÂ∫¶‰∏∫size-1
+        if (count == size - 1) {
+            // ◊Ó¥Û≥§∂»Œ™size-1
             continue;
         }
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
-        {
-            // ÂØÜÁ†ÅÂè™ÂèØÂåÖÂê´Êï∞Â≠óÂíåÂ≠óÊØç
-            putchar('*'); // Êé•Êî∂Âà∞‰∏Ä‰∏™Â≠óÁ¨¶Âêé, ÊâìÂç∞‰∏Ä‰∏™*
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+            // √‹¬Î÷ªø…∞¸∫¨ ˝◊÷∫Õ◊÷ƒ∏
+            putchar('*'); // Ω” ’µΩ“ª∏ˆ◊÷∑˚∫Û, ¥Ú”°“ª∏ˆ*
             password[count] = c;
             count++;
         }
     }
     password[count] = '\0';
     str = password;
-    delete[] password; // ÈáäÊîæÁ©∫Èó¥
+    delete[] password; //  Õ∑≈ø’º‰
     cout << endl;
 }
 
-void book() //ËÆ¢Á•®ËèúÂçï
-{
-    cout << "\nËØ∑ËæìÂÖ•ÈúÄË¶ÅËÆ¢Á•®ÁöÑÂ∫èÂè∑Ôºö";
-    //cin>>xxx
-    /* code */
-    if (true /* code */) //Êúâ‰ΩôÁ•®
-    {
-        /* code */
-        cout << "\nËÆ¢Á•®ÊàêÂäü!";
+bool BookUserExited(string username, int &userposi) {
+    int allbooknum = 0;
+    BookInfo bkif;
+    fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);//¥Úø™‘§∂®Œƒº˛
+    bookinfo.seekg(0, ios::beg);
+    bookinfo.read((char *) &allbooknum, sizeof(int));//∂¡»°‘§∂® ˝¡ø
+    for (int i = 0; i < allbooknum; i++) {//÷∏ˆºÏ—È
+        bookinfo.read((char *) &bkif, sizeof(BookInfo));
+        if (username == bkif.Username) {
+            bookinfo.close();
+            userposi = i;
+            return true;
+        }
     }
-    else //Êó†‰ΩôÁ•®
+    bookinfo.close();
+    userposi = -1;
+    return false;
+}
+
+bool BookNoExited(BookInfo bkif, string fliNo, int &tpfposi) {
+    for (int i = 0; i < bkif.NumOfTPF; i++) {
+        if (bkif.tpf[i].FliNumber == fliNo) {
+            tpfposi = i;
+            return true;
+        }
+    }
+    tpfposi = -1;
+    return false;
+}
+
+void book(int *thisposi, int n, string username);
+
+void book(int thisposi, string username) //∂©∆±≤Àµ•
+{
+    BookInfo bookhere;
+    int NumOfTicbked = 0;
+    int bookn = 0;
+    int sentinel = 0;
+    int *thesePosi;
+    Flight fli;
+    char whether;
+    cout << "\n «∑Ò∂©∆±£ø[Y/N]:";
+    cin >> whether;
+    while (sentinel == 0) {
+        if (whether == 'Y' || whether == 'y') {
+            sentinel = 1;
+        } else if (whether == 'N' || whether == 'n') {
+            cout << "’˝‘⁄∑µªÿ…œ“ª≤Ω..." << endl;
+            return;
+        } else {
+            cout << " ‰»Î¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î:";
+            cin >> whether;
+        }
+    }
+    fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
+    fsfile.seekg((sizeof(int)) + (thisposi * sizeof(Flight)), ios::beg);
+    fsfile.read((char *) &fli, sizeof(Flight));
+    cout << "«Î ‰»Î∂©∆±’≈ ˝£∫";
+    cin >> NumOfTicbked;
+    if (fli.ReturnSeats() >= NumOfTicbked) //”–”‡∆±
     {
-        cout << "\n‰∏∫ÊÇ®Êé®Ëçê‰ª•‰∏ãÂêåËµ∑ÈôçÂüéÂ∏ÇËà™Áè≠Ôºö\n\n";
-        /* code */
+
+        int ExitedBookposi;//¥Ê‘⁄µƒ”√ªß‘§∂®Œª÷√
+        if (BookUserExited(username, ExitedBookposi)) {//”√ªß÷Æ«∞‘§∂®π˝∆±
+            BookInfo bkif2;
+            int TPFposi;
+            fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
+            bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
+            bookinfo.read((char *) &bkif2, sizeof(BookInfo));
+            if (BookNoExited(bkif2, fli.ReturnFliNO(), TPFposi)) {//”√ªß÷Æ«∞‘§∂®π˝∏√ÃÀ∫Ω∞‡
+                for (int i = 0; i < NumOfTicbked; i++) {
+                    bkif2.tpf[TPFposi].Tickets++;
+                    fli.Saeatsdec();
+                }
+            } else {//”√ªßŒ¥‘§∂®π˝∏√ÃÀ∫Ω∞‡
+                strcpy_s(bkif2.tpf[NumOfTicbked].FliNumber, fli.ReturnFliNO());
+                bkif2.tpf[NumOfTicbked].Tickets = NumOfTicbked;
+                fli.ChangeSeatNum(fli.ReturnSeats() - NumOfTicbked);
+            }
+            fsfile.seekg((sizeof(int)) + (thisposi * sizeof(Flight)), ios::beg);
+            fsfile.write((char *) &fli, sizeof(Flight));
+            fsfile.close();
+            bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
+            bookinfo.write((char *) &bkif2, sizeof(BookInfo));
+            bookinfo.close();
+        } else {//∏√”√ªß÷Æ«∞Œ¥ π”√π˝‘§∂®œµÕ≥
+            strcpy_s(bookhere.Username, username.c_str());
+            strcpy_s(bookhere.tpf[0].FliNumber, fli.ReturnFliNO());
+            bookhere.tpf[0].Tickets = NumOfTicbked;
+            bookhere.NumOfTPF = 1;
+            fli.ChangeSeatNum(fli.ReturnSeats() - NumOfTicbked);
+
+            fstream bookinfo("bookinfo.dat", ios::in | ios::binary | ios::out);
+
+            bookinfo.seekg(0, ios::beg);
+            bookinfo.read((char *) &bookn, sizeof(int));
+
+            bookinfo.seekg(0, ios::end);
+            bookinfo.write((char *) &bookhere, sizeof(BookInfo));
+
+            bookn++;
+            bookinfo.seekg(0, ios::beg);
+            bookinfo.write((char *) &bookn, sizeof(int));
+            fsfile.seekg((sizeof(int)) + (thisposi * sizeof(Flight)), ios::beg);
+            fsfile.write((char *) &fli, sizeof(Flight));
+            fsfile.close();
+            bookinfo.close();
+        }
+        cout << "\n∂©∆±≥…π¶!";
+    } else //Œﬁ”‡∆±
+    {
+        Flight flihere;
+        string DepartC, ArrivC;
+        int n = 0;
+        DepartC = fli.ReturnDepartC();
+        ArrivC = fli.ReturnArrivC();
+        SearchFliC(DepartC, ArrivC, &thesePosi, n);
+        cout << "\nŒ™ƒ˙Õ∆ºˆ“‘œ¬Õ¨∆Ωµ≥« –∫Ω∞‡£∫\n\n";
+        for (int tempno = 0; tempno < n; tempno++) {
+            ShowthisFli(thesePosi[tempno], tempno, fli.ReturnFliNO());
+        }
+        fsfile.close();
+        book(thesePosi, n, username);
     }
 }
 
-void ui() //ËèúÂçïUI
+void book(int *thisposi, int n, string username) //∂‡÷÷∆±¿‡∂©∆±≤Àµ•
 {
+    Flight flirsrved;
+    BookInfo bookinfo;
+    int BookNo;
+    int NumOfTicbked;
+    int ExitedBookposi;
+    char whether;
+    int sentinel = 0;
+    cout << "\n «∑Ò∂©∆±£ø[Y/N]:";
+    cin >> whether;
+    while (sentinel == 0) {
+        if (whether == 'Y' || whether == 'y') {
+            sentinel = 1;
+        } else if (whether == 'N' || whether == 'n') {
+            cout << "’˝‘⁄∑µªÿ…œ“ª≤Ω..." << endl;
+            return;
+        } else {
+            cout << " ‰»Î¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î:";
+            cin >> whether;
+        }
+    }
+    retry:
+    cout << "\n«Î ‰»Î–Ë“™∂©∆±µƒ–Ú∫≈£∫";
+    cin >> BookNo;
+    BookNo--;//–Ú∫≈Œ™ µº Œª÷√-1
 
-    int Fnum = 0, posi1 = 0, posi2 = 0, lastposi = 0;
+    cout << "«Î ‰»Î∂©∆±’≈ ˝£∫";
+    cin >> NumOfTicbked;
+
+    fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
+    fsfile.seekg((sizeof(int)) + (thisposi[BookNo] * sizeof(Flight)), ios::beg);
+    fsfile.read((char *) &flirsrved, sizeof(Flight));
+
+
+    //    strcpy_s(bookinfo.Username, username.c_str());
+    //    strcpy_s(bookinfo.tpf[0].FliNumber, flirsrved.ReturnFliNO());
+    //    bookinfo.tpf[0].Tickets = NumOfTicbked;
+
+    if (flirsrved.ReturnSeats() >= NumOfTicbked) //”–”‡∆±
+    {
+        fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
+        if (BookUserExited(username, ExitedBookposi)) //”√ªß π”√π˝‘§∂®œµÕ≥
+        {
+            BookInfo bkif2;
+            int TPFposi;
+            bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
+            bookinfo.read((char *) &bkif2, sizeof(BookInfo));
+            if (BookNoExited(bkif2, flirsrved.ReturnFliNO(), TPFposi)) {
+                for (int i = 0; i < NumOfTicbked; i++) {
+                    bkif2.tpf[TPFposi].Tickets++;
+                    flirsrved.Saeatsdec();
+                }
+            } else {
+                strcpy_s(bkif2.tpf[NumOfTicbked].FliNumber, flirsrved.ReturnFliNO());
+                bkif2.tpf[NumOfTicbked].Tickets = NumOfTicbked;
+                flirsrved.ChangeSeatNum(flirsrved.ReturnSeats() - NumOfTicbked);
+            }
+            fsfile.seekg((sizeof(int)) + (thisposi[BookNo] * sizeof(Flight)), ios::beg);
+            fsfile.write((char *) &flirsrved, sizeof(Flight));
+            fsfile.close();
+            bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
+            bookinfo.write((char *) &bkif2, sizeof(BookInfo));
+            bookinfo.close();
+        } else {
+            BookInfo bookhere;
+            strcpy_s(bookhere.Username, username.c_str());
+            strcpy_s(bookhere.tpf[0].FliNumber, flirsrved.ReturnFliNO());
+            bookhere.tpf[0].Tickets = NumOfTicbked;
+            bookhere.NumOfTPF = 1;
+            flirsrved.ChangeSeatNum(flirsrved.ReturnSeats() - NumOfTicbked);
+
+
+            bookinfo.seekg(0, ios::beg);
+            int bookn;
+            bookinfo.read((char *) &bookn, sizeof(int));
+
+            bookinfo.seekg(0, ios::end);
+            bookinfo.write((char *) &bookhere, sizeof(BookInfo));
+
+            bookn++;
+            bookinfo.seekg(0, ios::beg);
+            bookinfo.write((char *) &bookn, sizeof(int));
+            fsfile.seekg((sizeof(int)) + (thisposi[BookNo] * sizeof(Flight)), ios::beg);
+            fsfile.write((char *) &flirsrved, sizeof(Flight));
+            fsfile.close();
+            bookinfo.close();
+        }
+
+
+        cout << "\n∂©∆±≥…π¶!";
+    } else //Œﬁ”‡∆±
+    {
+        sentinel = 0;
+        cout << "\nƒ˙—°‘Òµƒ∫Ω∞‡”‡∆±‘› ±≤ª◊„£¨ «∑Ò—°‘Ò¡–±Ìƒ⁄∆‰À˚∫Ω∞‡[Y/N]\n\n";
+        while (sentinel == 0) {
+            if (whether == 'Y' || whether == 'y') {
+                goto retry;
+            } else if (whether == 'N' || whether == 'n') {
+                cout << "’˝‘⁄∑µªÿ…œ“ª≤Ω..." << endl;
+                return;
+            } else {
+                cout << " ‰»Î¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î:";
+                cin >> whether;
+            }
+        }
+    }
+}
+
+bool showallBookinfo(BookInfo userbk) {
+    int posi;
+    for (int i = 0; i < userbk.NumOfTPF; i++) {
+        SearchFliNo(userbk.tpf[i].FliNumber, posi);
+        ShowthisFli(posi, i);
+        cout << " ƒ˙“—∂©∆±" << userbk.tpf[i].Tickets << "’≈";
+    }
+}
+
+
+void ui() //≤Àµ•UI
+{
+    string TypeFliNo, TypeDepartC, TypeArrivC;
+    int Fnum = 0, posi1 = 0, posi2 = 0, lastposi = 0, soposi = 0, relatedFlin = 0, *theseposi;
     char m, n, p, q, i, j, k;
     string Nam, newNam;
     string Passwd, newPasswd;
-    string defAdmPasswd = "666666"; //ÁÆ°ÁêÜÂëòÈªòËÆ§ÂØÜÁ†Å666666
+    string defAdmPasswd = "666666"; //π‹¿Ì‘±ƒ¨»œ√‹¬Î666666
 
-lb1:
-    cout << endl;
+    lb1:
+    //cout << endl;
     cout << "          @@     @@      @@    @@@@@@@@@    @@@@@@@@@@\n";
     cout << "          @@     @@      @@    @@           @@        \n";
     cout << "          @@     @@      @@    @@           @@        \n";
@@ -670,428 +924,479 @@ lb1:
     cout << "          @@     @@      @@    @@           @@        \n";
     cout << "    @@    @@      @@    @@     @@           @@        \n";
     cout << "     @@@@@@        @@@@@@      @@           @@@@@@@@@@\n";
-    cout << "\n               Ê¨¢ËøéËøõÂÖ•ÈÖ±ËèúËà™Á©∫ËÆ¢Á•®Á≥ªÁªüÔºÅ\n";
-    cout << "\n********************ËØ∑ÈÄâÊã©Áî®Êà∑Ë∫´‰ªΩ********************\n";
-    cout << "\n\t\t1.ÁÆ°ÁêÜÂëòÁôªÂΩï\n\n";
-    cout << "\t\t2.‰πòÂÆ¢ÁôªÂΩï\n\n";
-    cout << "\t\t3.ÈÄÄÂá∫ËØ•Á≥ªÁªü\n\n";
-    cout << "ËØ∑ËæìÂÖ•ÊÇ®ÁöÑÈÄâÊã©Ôºö";
-
+    cout << "\n               ª∂”≠Ω¯»ÎΩ¥≤À∫Ωø’∂©∆±œµÕ≥£°\n";
+    cout << "\n********************«Î—°‘Ò”√ªß…Ì∑›********************\n";
+    cout << "\n\t\t1.π‹¿Ì‘±µ«¬º\n\n";
+    cout << "\t\t2.≥ÀøÕµ«¬º\n\n";
+    cout << "\t\t3.ÕÀ≥ˆ∏√œµÕ≥\n\n";
+    cout << "«Î ‰»Îƒ˙µƒ—°‘Ò£∫";
     cin >> m;
-    switch (m)
-    {
-    case '1': //ÁÆ°ÁêÜÂëòË∫´‰ªΩ
+    switch (m) {
+        case '1': //π‹¿Ì‘±…Ì∑›
 
-        cout << "\nËØ∑ËæìÂÖ•ÁÆ°ÁêÜÂëòÂØÜÁ†ÅÔºöÔºàÈªòËÆ§6‰∏™6Ôºâ"; //ËæìÂÖ•ÁÆ°ÁêÜÂëòÈªòËÆ§ÂØÜÁ†Å666666
-        inputPassword(Passwd, 6);
+            cout << "\n«Î ‰»Îπ‹¿Ì‘±√‹¬Î£∫£®ƒ¨»œ6∏ˆ6£©"; // ‰»Îπ‹¿Ì‘±ƒ¨»œ√‹¬Î666666
+            inputPassword(Passwd, 6);
 
-        if (Passwd == defAdmPasswd) //ÂØÜÁ†ÅÊ≠£Á°Æ
-        {
-            cout << "\nÁôªÂΩïÊàêÂäüÔºÅÊ≠£Âú®ËøõÂÖ•ÁÆ°ÁêÜÂëòËèúÂçï...\n\n";
-            sleepcp(1000);
-            system("cls"); //Ê∏ÖÂ±è
-
-        lb3:
-            cout << "\n            „ÄêÈÖ±ËèúËà™Á©∫ËÆ¢Á•®Á≥ªÁªü-ÁÆ°ÁêÜÂëòËèúÂçï„Äë\n";
-            cout << "\n*****************ËØ∑ÈÄâÊã©ÊÇ®Ë¶ÅËøõË°åÁöÑÊìç‰Ωú*****************\n";
-            cout << "\n\t\t1.Êü•ÁúãÊâÄÊúâËà™Áè≠‰ø°ÊÅØÊàñ‰øÆÊîπ\n\n";
-            cout << "\t\t2.Â¢ûÊ∑ªËà™Áè≠‰ø°ÊÅØ\n\n";
-            cout << "\t\t3.ËøîÂõû‰∏ä‰∏ÄÊ≠•\n\n";
-            cout << "ËØ∑ËæìÂÖ•ÊÇ®ÁöÑÈÄâÊã©Ôºö";
-            cin >> p;
-            switch (p)
+            if (Passwd == defAdmPasswd) //√‹¬Î’˝»∑
             {
-            case '1':
-                //ÊâìÂç∞ÊâÄÊúâËà™Áè≠‰ø°ÊÅØ
-                   if (ShowAllFli() == -1)
-                {
-                    cout << "Êó†Ëà™Áè≠‰ø°ÊÅØÔºÅËØ∑ÈáçÊñ∞ËæìÂÖ•„ÄÇ";
-                    sleepcp(2000);
-                    system("cls");
-                    goto lb3;
-                }
+                cout << "\nµ«¬º≥…π¶£°’˝‘⁄Ω¯»Îπ‹¿Ì‘±≤Àµ•...\n\n";
+                sleepcp(1000);
+                system("cls"); //«Â∆¡
 
-                cout << "\nËØ∑ËæìÂ¶ÇÈúÄË¶ÅËøõË°åÊìç‰ΩúÁöÑÂ∫èÂè∑Ôºö";
-                //int Fnum = 0;
-                cin >> Fnum;
-
-                if (CheckFliNum(Fnum))
-                {
-                //system("cls");
-                lb5:
-                    cout << "\n*****************ËØ∑ÈÄâÊã©ÊÇ®Ë¶Å‰øÆÊîπÊàñÂà†Èô§ÁöÑÊìç‰Ωú*****************\n";
-                    cout << "\n\t\t1.Âà†Èô§Ëà™Áè≠\n\n";
-                    cout << "\t\t2.‰øÆÊîπËà™Áè≠Ëµ∑È£ûÂüéÂ∏Ç\n\n";
-                    cout << "\t\t3.‰øÆÊîπËà™Áè≠ÈôçËêΩÂüéÂ∏Ç\n\n";
-                    cout << "\t\t4.‰øÆÊîπÊú∫Âûã\n\n";
-                    cout << "\t\t5.‰øÆÊîπÊú∫Á•®‰ª∑Ê†º\n\n";
-                    cout << "\t\t6.‰øÆÊîπËµ∑ÈôçÊó∂Èó¥\n\n";
-                    cout << "\t\t7.‰øÆÊîπËà™Áè≠Âè∑\n\n";
-                    cout << "\t\t8.‰øÆÊîπÂâ©‰ΩôÂ∫ß‰Ωç\n\n";
-                    cout << "\t\t9.ËøîÂõû‰∏ä‰∏ÄÊ≠•\n\n";
-                    cout << "ËØ∑ËæìÂÖ•ÊÇ®ÁöÑÈÄâÊã©Ôºö";
-                    cin >> i;
-                    switch (i)
-                    {
+                lb3:
+                cout << "\n            °æΩ¥≤À∫Ωø’∂©∆±œµÕ≥-π‹¿Ì‘±≤Àµ•°ø\n";
+                cout << "\n*****************«Î—°‘Òƒ˙“™Ω¯––µƒ≤Ÿ◊˜*****************\n";
+                cout << "\n\t\t1.≤Èø¥À˘”–∫Ω∞‡–≈œ¢ªÚ–ﬁ∏ƒ\n\n";
+                cout << "\t\t2.‘ˆÃÌ∫Ω∞‡–≈œ¢\n\n";
+                cout << "\t\t3.∑µªÿ…œ“ª≤Ω\n\n";
+                cout << "«Î ‰»Îƒ˙µƒ—°‘Ò£∫";
+                cin >> p;
+                switch (p) {
                     case '1':
-                        DeleteFli(Fnum);
-                        cout << "\nÂà†Èô§ÊàêÂäüÔºÅÊ≠£Âú®ËøîÂõûÁÆ°ÁêÜÂëòËèúÂçï...";
-                        sleepcp(1 * 1000);
+                        //¥Ú”°À˘”–∫Ω∞‡–≈œ¢
+                        if (ShowAllFli() == -1) {
+                            cout << "Œﬁ∫Ω∞‡–≈œ¢£°«Î÷ÿ–¬ ‰»Î°£";
+                            sleepcp(2000);
+                            system("cls");
+                            goto lb3;
+                        }
+
+                        cout << "\n«Î ‰»Á–Ë“™Ω¯––≤Ÿ◊˜µƒ–Ú∫≈£∫";
+                        //int Fnum = 0;
+                        cin >> Fnum;
+
+                        if (CheckFliNum(Fnum)) {
+                            //system("cls");
+                            lb5:
+                            cout << "\n*****************«Î—°‘Òƒ˙“™–ﬁ∏ƒªÚ…æ≥˝µƒ≤Ÿ◊˜*****************\n";
+                            cout << "\n\t\t1.…æ≥˝∫Ω∞‡\n\n";
+                            cout << "\t\t2.–ﬁ∏ƒ∫Ω∞‡∆∑…≥« –\n\n";
+                            cout << "\t\t3.–ﬁ∏ƒ∫Ω∞‡Ωµ¬‰≥« –\n\n";
+                            cout << "\t\t4.–ﬁ∏ƒª˙–Õ\n\n";
+                            cout << "\t\t5.–ﬁ∏ƒª˙∆±º€∏Ò\n\n";
+                            cout << "\t\t6.–ﬁ∏ƒ∆Ωµ ±º‰\n\n";
+                            cout << "\t\t7.–ﬁ∏ƒ∫Ω∞‡∫≈\n\n";
+                            cout << "\t\t8.–ﬁ∏ƒ £”‡◊˘Œª\n\n";
+                            cout << "\t\t9.∑µªÿ…œ“ª≤Ω\n\n";
+                            cout << "«Î ‰»Îƒ˙µƒ—°‘Ò£∫";
+                            cin >> i;
+                            switch (i) {
+                                case '1':
+                                    DeleteFli(Fnum);
+                                    cout << "\n…æ≥˝≥…π¶£°’˝‘⁄∑µªÿπ‹¿Ì‘±≤Àµ•...";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb3;
+
+                                case '2':
+                                    ModifyDepartC(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '3':
+                                    ModifyLandC(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '4':
+                                    ModifyCraft(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '5':
+                                    ModifyPrice(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '6':
+                                    ModifyTime(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '7':
+                                    ModifyFliNo(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '8':
+                                    ModifySeats(Fnum);
+                                    cout << "\n–ﬁ∏ƒ≥…π¶£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+
+                                case '9': //∑µªÿ…œ“ª≤Ω
+                                    system("cls");
+                                    goto lb3;
+
+                                default:
+                                    cout << "\n«Î ‰»Î’˝»∑—°‘Ò£°";
+                                    sleepcp(1 * 1000);
+                                    system("cls");
+                                    goto lb5;
+                            }
+                        }
+                            //»Áπ˚∫Ω∞‡–Ú∫≈ ‰»Î”–ŒÛ£¨ªÿµΩ÷Æ«∞
+                        else {
+                            cout << "\n«Î ‰»Î’˝»∑µƒ∫Ω∞‡–Ú∫≈£°";
+                            sleepcp(2000);
+                            system("cls");
+                            goto lb3;
+                        }
+
+                    case '2': //‘ˆÃÌ∫Ω∞‡–≈œ¢
+                        AddFlight();
+
+                        cout << "\n∫Ω∞‡–≈œ¢¬º»Î≥…π¶£°º¥Ω´∑µªÿπ‹¿Ì‘±≤Àµ•£°";
+                        sleepcp(2000);
                         system("cls");
                         goto lb3;
 
-                    case '2':
-                        ModifyDepartC(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
+                    case '3': //∑µªÿ…œ“ª≤Ω£¨º¥◊Óø™ º
                         system("cls");
-                        goto lb5;
+                        goto lb1;
 
-                    case '3':
-                        ModifyLandC(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
+                    default: //—°œÓ ‰»Î”–ŒÛ
+                        cout << "\n«Î ‰»Î’˝»∑—°‘Ò£°";
                         sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-
-                    case '4':
-                        ModifyCraft(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-
-                    case '5':
-                        ModifyPrice(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-
-                    case '6':
-                        ModifyTime(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-
-                    case '7':
-                        ModifyFliNo(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-
-                    case '8':
-                        ModifySeats(Fnum);
-                        cout << "\n‰øÆÊîπÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-
-                    case '9': //ËøîÂõû‰∏ä‰∏ÄÊ≠•
                         system("cls");
                         goto lb3;
-
-                    default:
-                        cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÈÄâÊã©ÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb5;
-                    }
                 }
-                //Â¶ÇÊûúËà™Áè≠Â∫èÂè∑ËæìÂÖ•ÊúâËØØÔºåÂõûÂà∞‰πãÂâç
-                else
-                {
-                    cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÁöÑËà™Áè≠Â∫èÂè∑ÔºÅ";
-                    sleepcp(2000);
-                    system("cls");
-                    goto lb3;
-                }
-
-            case '2': //Â¢ûÊ∑ªËà™Áè≠‰ø°ÊÅØ
-                AddFlight();
-
-                cout << "\nËà™Áè≠‰ø°ÊÅØÂΩïÂÖ•ÊàêÂäüÔºÅÂç≥Â∞ÜËøîÂõûÁÆ°ÁêÜÂëòËèúÂçïÔºÅ";
+            } else //√‹¬Î¥ÌŒÛ
+            {
+                cout << "\n√‹¬Î¥ÌŒÛ£° «Î÷ÿ–¬µ«¬º£°\n";
                 sleepcp(2000);
                 system("cls");
-                goto lb3;
-
-            case '3': //ËøîÂõû‰∏ä‰∏ÄÊ≠•ÔºåÂç≥ÊúÄÂºÄÂßã
-                system("cls");
                 goto lb1;
-
-            default: //ÈÄâÈ°πËæìÂÖ•ÊúâËØØ
-                cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÈÄâÊã©ÔºÅ";
-                sleepcp(1 * 1000);
-                system("cls");
-                goto lb3;
             }
-        }
-        else //ÂØÜÁ†ÅÈîôËØØ
-        {
-            cout << "\nÂØÜÁ†ÅÈîôËØØÔºÅ ËØ∑ÈáçÊñ∞ÁôªÂΩïÔºÅ\n";
-            sleepcp(2000);
+
+        case '2': //≥ÀøÕ…Ì∑›
             system("cls");
-            goto lb1;
-        }
+        lb2:
+            cout << "\n             °æΩ¥≤À∫Ωø’∂©∆±œµÕ≥-≥ÀøÕ≤Àµ•°ø\n";
+            cout << "\n*****************«Î—°‘Òƒ˙“™Ω¯––µƒ≤Ÿ◊˜*****************\n";
+            cout << "\n\t\t1.◊¢≤·–¬”√ªß\n\n";
+            cout << "\t\t2.“—”–’Àªßµ«¬º\n\n";
+            cout << "\t\t3.∑µªÿ…œ“ª≤Ω\n\n";
 
-    case '2': //‰πòÂÆ¢Ë∫´‰ªΩ
-        system("cls");
-    lb2:
-        cout << "\n             „ÄêÈÖ±ËèúËà™Á©∫ËÆ¢Á•®Á≥ªÁªü-‰πòÂÆ¢ËèúÂçï„Äë\n";
-        cout << "\n*****************ËØ∑ÈÄâÊã©ÊÇ®Ë¶ÅËøõË°åÁöÑÊìç‰Ωú*****************\n";
-        cout << "\n\t\t1.Ê≥®ÂÜåÊñ∞Áî®Êà∑\n\n";
-        cout << "\t\t2.Â∑≤ÊúâË¥¶Êà∑ÁôªÂΩï\n\n";
-        cout << "\t\t3.ËøîÂõû‰∏ä‰∏ÄÊ≠•\n\n";
-
-        cout << "ËØ∑ËæìÂÖ•ÊÇ®ÁöÑÈÄâÊã©Ôºö";
-        cin >> n;
-        switch (n)
-        {
-        case '1':
-        ReRegis:
-            cout << "\nËØ∑ËæìÂÖ•Êñ∞Áî®Êà∑Âêç:";
-            cin >> newNam;
-            if (CheckSameName(newNam, posi1))
-            {
-                cout << "Ë¥¶Êà∑Â∑≤Â≠òÂú®ÔºåËØ∑ÈÄâÊã©1.Áõ¥Êé•ÁôªÂΩïÊàñ2.Êõ¥Êç¢Áî®Êà∑ÂêçÔºö";
-                int Choice = 0;
-                cin >> Choice;
-                if (Choice == 1)
-                {
-                    lastposi = posi1;
-                    goto DirecLog;
-                }
-                else
-                {
-                    goto ReRegis;
-                }
-            }
-            cout << "\nËØ∑ËæìÂÖ•Êñ∞ÂØÜÁ†Å:";
-            inputPassword(newPasswd, 20);
-            RegisterUser(newNam, newPasswd);
-            cout << "\nÊ≥®ÂÜåÊàêÂäüÔºÅÊ≠£Âú®ËøîÂõû‰πòÂÆ¢ÁôªÂΩïÁïåÈù¢„ÄÇ\n";
-            sleepcp(3000);
-            system("cls");
-            goto lb2;
-
-        case '2':
-        Relog:
-            cout << "\nËØ∑ËæìÂÖ•Áî®Êà∑Âêç:";
-            cin >> Nam;
-            //Êü•ÊâæÊñá‰ª∂ÊòØÂê¶ÊúâÊ≠§‰∫∫Áî®Êà∑ÂêçÔºåÊúâÂàôÁªßÁª≠
-            /* code */
-            if (!CheckSameName(Nam, posi2)) //Â¶ÇÊûúÊ≤°ÊúâËØ•Áî®Êà∑ÂêçÂàôÊâìÂç∞Êú™Ê≥®ÂÜåÔºåÂπ∂ÂõûÂà∞‰πãÂâç
-            {
-                cout << "\nËØ•Áî®Êà∑Êú™Ê≥®ÂÜåÔºÅËØ∑ÈÄâÊã©1.Ê≥®ÂÜåÊñ∞Ë¥¶Âè∑Êàñ2.ÈáçÊñ∞ËæìÂÖ•Áî®Êà∑ÂêçÔºö";
-                int Choi2 = 0;
-                cin >> Choi2;
-                if (Choi2 == 1)
-                {
-                    goto ReRegis;
-                }
-                else
-                {
-                    goto Relog;
-                }
-            }
-        DirecLog:
-            cout << "\nËØ∑ËæìÂÖ•ÂØÜÁ†Å:";
-            inputPassword(Passwd, 6);
-            //Âà§Êñ≠ÂØÜÁ†ÅÊ≠£ËØØ
-            /* code */
-            if (Login(lastposi, Passwd)) //Â¶ÇÊûúÂØÜÁ†ÅÊ≠£Á°ÆÔºåÂàôÁôªÂΩïÊàêÂäü
-            {
-                cout << "\nÁôªÂΩïÊàêÂäüÔºÅ\n\n";
-                sleepcp(1 * 1000);
-                system("cls");
-            lb4:
-                cout << "\n**************ËØ∑ÈÄâÊã©ÊÇ®Ë¶ÅËøõË°åÁöÑÊìç‰Ωú**************\n";
-                cout << "\n\t\t1.Êü•ËØ¢Ëà™Áè≠‰ø°ÊÅØÊàñËÆ¢Á•®\n\n";
-                cout << "\t\t2.Êü•ÁúãËÆ¢Á•®‰ø°ÊÅØÊàñÈÄÄÁ•®\n\n";
-                cout << "\t\t3.ËøîÂõû‰∏ä‰∏ÄÊ≠•\n\n";
-                cout << "ËØ∑ËæìÂÖ•ÊÇ®ÁöÑÈÄâÊã©Ôºö";
-                cin >> q;
-                switch (q)
-                {
+            cout << "«Î ‰»Îƒ˙µƒ—°‘Ò£∫";
+            cin >> n;
+            switch (n) {
                 case '1':
-                    system("cls");
-                lb6:
-                    cout << "\n**************ËØ∑ÈÄâÊã©ÊÇ®Ë¶ÅËøõË°åÁöÑÊìç‰Ωú**************\n";
-                    cout << "\n\t\t1.ËæìÂÖ•Ëà™Áè≠Âè∑Êü•ËØ¢\n\n";
-                    cout << "\t\t2.ËæìÂÖ•Ëµ∑È£ûÂíåÈôçËêΩÂüéÂ∏ÇÊü•ËØ¢\n\n";
-                    cout << "\t\t3.ËæìÂÖ•ÂüéÂ∏ÇÊ®°Á≥äÊü•ËØ¢\n\n";
-                    cout << "\t\t4.ËøîÂõû‰∏ä‰∏ÄÊ≠•\n\n";
-                    cout << "ËØ∑ËæìÂÖ•ÊÇ®ÁöÑÈÄâÊã©Ôºö";
-                    cin >> j;
-                    switch (j)
-                    {
-                    case '1':
-                        cout << "\nËØ∑ËæìÂÖ•Ëà™Áè≠Âè∑Ôºö";
-                        //cin >> xxx;
-                        if (true /* code */) //ÂèØ‰ª•Êü•ÊâæÂà∞Áõ∏ÂÖ≥‰ø°ÊÅØ
-                        {
-                            cout << "\nÊü•ÊâæÂà∞‰ª•‰∏ãËà™Áè≠‰ø°ÊÅØÔºö\n\n";
-                            //ÊòæÁ§∫Áõ∏ÂÖ≥Ëà™Áè≠
-                            /* code */
-
-                            book(); //ËÆ¢Á•®ËèúÂçï
+                ReRegis:
+                    cout << "\n«Î ‰»Î–¬”√ªß√˚:";
+                    cin >> newNam;
+                    if (CheckSameName(newNam, posi1)) {
+                        cout << "’Àªß“—¥Ê‘⁄£¨«Î—°‘Ò1.÷±Ω”µ«¬ºªÚ2.∏¸ªª”√ªß√˚£∫";
+                        int Choice = 0;
+                        cin >> Choice;
+                        if (Choice == 1) {
+                            lastposi = posi1;
+                            goto DirecLog;
+                        } else {
+                            goto ReRegis;
                         }
-                        else
-                        {
-                            cout << "\nÊü•Êó†Ê≠§Ëà™Áè≠ÔºÅÊ≠£Âú®ËøîÂõû‰∏ä‰∏ÄÊ≠•...";
-                            sleepcp(1 * 1000);
-                            system("cls");
-                            goto lb6;
-                        }
-
-                    case '2':
-                        cout << "\nËØ∑ËæìÂÖ•Ëµ∑È£ûÂíåÈôçËêΩÂüéÂ∏ÇÔºö";
-                        //cin >> xxx;
-                        if (true /* code */) //ÂèØ‰ª•Êü•ÊâæÂà∞Áõ∏ÂÖ≥‰ø°ÊÅØ
-                        {
-                            cout << "\nÊü•ÊâæÂà∞‰ª•‰∏ãËà™Áè≠‰ø°ÊÅØÔºö\n\n";
-                            //ÊòæÁ§∫Áõ∏ÂÖ≥Ëà™Áè≠
-                            /* code */
-
-                            book(); //ËÆ¢Á•®ËèúÂçï
-                        }
-                        else
-                        {
-                            cout << "\nÊü•Êó†Ê≠§Ëà™Áè≠ÔºÅ";
-                            sleepcp(1 * 1000);
-                            system("cls");
-                            goto lb6;
-                        }
-
-                    case '3':
-                        cout << "\nËØ∑ËæìÂÖ•ÂüéÂ∏ÇÔºö";
-                        //cin >> xxx;
-                        if (true /* code */) //ÂèØ‰ª•Êü•ÊâæÂà∞Áõ∏ÂÖ≥‰ø°ÊÅØ
-                        {
-                            cout << "\nÊü•ÊâæÂà∞‰ª•‰∏ãËà™Áè≠‰ø°ÊÅØÔºö\n\n";
-                            //ÊòæÁ§∫Áõ∏ÂÖ≥Ëà™Áè≠
-                            /* code */
-
-                            book(); //ËÆ¢Á•®ËèúÂçï
-                        }
-                        else
-                        {
-                            cout << "\nÊü•Êó†Ê≠§Ëà™Áè≠ÔºÅÊ≠£Âú®ËøîÂõû‰∏ä‰∏ÄÊ≠•...";
-                            sleepcp(1 * 1000);
-                            system("cls");
-                            goto lb6;
-                        }
-
-                    case '4': //ËøîÂõû‰∏ä‰∏ÄÊ≠•
-                        system("cls");
-                        goto lb4;
-
-                    default: //ÈÄâÈ°πËæìÂÖ•ÊúâËØØ
-                        cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÈÄâÊã©ÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb6;
                     }
-
-                    break;
-                case '2':
-                    cout << "\nÊÇ®ÁöÑËÆ¢Á•®‰ø°ÊÅØÂ¶Ç‰∏ãÔºö\n";
-                    /* code */
-                    cout << "\nÊòØÂê¶ÈúÄË¶ÅÈÄÄÁ•®Ôºü(1.ÊòØÔºõ2.Âê¶) ";
-                    cin >> k;
-                    if (k == 1)
-                    {
-                        /* code */
-                        cout << "\nÈÄÄÁ•®ÊàêÂäüÔºÅ";
-                        sleepcp(1 * 1000);
-                        system("cls");
-                        goto lb2;
-                    }
-                    else if (k == 2)
-                    {
-                        system("cls");
-                        goto lb6;
-                    }
-                    else
-                    {
-                        system("cls");
-                        goto lb2;
-                    }
-
-                case '3': //ËøîÂõû‰∏ä‰∏ÄÊ≠•
+                    cout << "\n«Î ‰»Î–¬√‹¬Î:";
+                    inputPassword(newPasswd, 20);
+                    RegisterUser(newNam, newPasswd);
+                    cout << "\n◊¢≤·≥…π¶£°’˝‘⁄∑µªÿ≥ÀøÕµ«¬ºΩÁ√Ê°£\n";
+                    sleepcp(3000);
                     system("cls");
                     goto lb2;
 
-                default: //ÈÄâÈ°πËæìÂÖ•ÊúâËØØ
-                    cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÈÄâÊã©ÔºÅ";
+                case '2':
+                Relog:
+                    cout << "\n«Î ‰»Î”√ªß√˚:";
+                    cin >> Nam;
+                    //≤È’“Œƒº˛ «∑Ò”–¥À»À”√ªß√˚£¨”–‘ÚºÃ–¯
+                    /* code */
+                    if (!CheckSameName(Nam, posi2)) //»Áπ˚√ª”–∏√”√ªß√˚‘Ú¥Ú”°Œ¥◊¢≤·£¨≤¢ªÿµΩ÷Æ«∞
+                    {
+                        cout << "\n∏√”√ªßŒ¥◊¢≤·£°«Î—°‘Ò1.◊¢≤·–¬’À∫≈ªÚ2.÷ÿ–¬ ‰»Î”√ªß√˚£∫";
+                        int Choi2 = 0;
+                        cin >> Choi2;
+                        if (Choi2 == 1) {
+                            goto ReRegis;
+                        } else {
+                            goto Relog;
+                        }
+                    } else {
+                        lastposi = posi2;
+                    }
+                DirecLog:
+                    cout << "\n«Î ‰»Î√‹¬Î:";
+                    inputPassword(Passwd, 20);
+                    //≈–∂œ√‹¬Î’˝ŒÛ
+                    /* code */
+                    if (Login(lastposi, Passwd)) //»Áπ˚√‹¬Î’˝»∑£¨‘Úµ«¬º≥…π¶
+                    {
+                        cout << "\nµ«¬º≥…π¶£°\n\n";
+                        sleepcp(1 * 1000);
+                        system("cls");
+                        lb4:
+                        cout << "\n**************«Î—°‘Òƒ˙“™Ω¯––µƒ≤Ÿ◊˜**************\n";
+                        cout << "\n\t\t1.≤È—Ø∫Ω∞‡–≈œ¢ªÚ∂©∆±\n\n";
+                        cout << "\t\t2.≤Èø¥∂©∆±–≈œ¢ªÚÕÀ∆±\n\n";
+                        cout << "\t\t3.∑µªÿ…œ“ª≤Ω\n\n";
+                        cout << "«Î ‰»Îƒ˙µƒ—°‘Ò£∫";
+                        cin >> q;
+                        switch (q) {
+                            case '1':
+                                system("cls");
+                            lb6:
+                                cout << "\n**************«Î—°‘Òƒ˙“™Ω¯––µƒ≤Ÿ◊˜**************\n";
+                                cout << "\n\t\t1. ‰»Î∫Ω∞‡∫≈≤È—Ø\n\n";
+                                cout << "\t\t2. ‰»Î∆∑…∫ÕΩµ¬‰≥« –≤È—Ø\n\n";
+                                cout << "\t\t3. ‰»Î∫Ω∞‡∫≈ªÚ≥« –ƒ£∫˝≤È—Ø\n\n";
+                                cout << "\t\t4.∑µªÿ…œ“ª≤Ω\n\n";
+                                cout << "«Î ‰»Îƒ˙µƒ—°‘Ò£∫";
+                                cin >> j;
+                                switch (j) {
+                                    case '1': {
+                                        cout << "\n«Î ‰»Î∫Ω∞‡∫≈£∫";
+                                        cin >> TypeFliNo;
+                                        if (SearchFliNo(TypeFliNo, soposi)) //ø…“‘≤È’“µΩœ‡πÿ–≈œ¢
+                                        {
+                                            cout << "\n≤È’“µΩ“‘œ¬∫Ω∞‡–≈œ¢£∫\n\n";
+                                            //œ‘ æœ‡πÿ∫Ω∞‡
+                                            ShowthisFli(soposi, 0);
+
+                                            book(soposi, Nam); //∂©∆±≤Àµ•
+                                        } else {
+                                            cout << "\n≤ÈŒﬁ¥À∫Ω∞‡£°’˝‘⁄∑µªÿ…œ“ª≤Ω...";
+                                            sleepcp(1 * 1000);
+                                            system("cls");
+                                        }
+                                        goto lb6;
+                                    }
+                                    case '2': {
+                                        cout << "\n«Î ‰»Î∆∑…≥« –£∫";
+                                        cin >> TypeDepartC;
+                                        cout << "\n«Î ‰»ÎΩµ¬‰≥« –£∫";
+                                        cin >> TypeArrivC;
+                                        if (SearchFliC(TypeDepartC, TypeArrivC, &theseposi, relatedFlin)) //ø…“‘≤È’“µΩœ‡πÿ–≈œ¢
+                                        {
+                                            cout << "\n≤È’“µΩ“‘œ¬∫Ω∞‡–≈œ¢£∫\n\n";
+                                            for (int tempno = 0; tempno < relatedFlin; tempno++) {
+                                                ShowthisFli(theseposi[tempno], tempno);
+                                            }//œ‘ æœ‡πÿ∫Ω∞‡
+
+                                            /* code */
+
+                                            book(theseposi, relatedFlin, Nam); //∂©∆±≤Àµ•
+                                        } else {
+                                            cout << "\n≤ÈŒﬁ¥À∫Ω∞‡£°";
+                                            sleepcp(1 * 1000);
+                                            system("cls");
+
+                                        }
+                                        goto lb6;
+                                    }
+                                    case '3': {
+                                        string NoorCity;
+                                        int FliRn;
+                                        int *ReturnPosi;
+                                        cout << "\n«Î ‰»Î∫Ω∞‡∫≈ªÚ”–πÿ≥« –£∫";
+                                        cin >> NoorCity;
+                                        if (NoorCity.c_str()[0] < 0) {
+                                            if (SearchFliRC(NoorCity, &ReturnPosi, FliRn)) {
+                                                cout << "\n≤È’“µΩ“‘œ¬∫Ω∞‡–≈œ¢£∫\n\n";
+                                                for (int tempno2 = 0; tempno2 < FliRn; tempno2++) {
+                                                    ShowthisFli(ReturnPosi[tempno2], tempno2);
+                                                }
+
+                                                book(ReturnPosi, FliRn, Nam);
+                                            } else {
+                                                cout << "\n≤ÈŒﬁ¥À∫Ω∞‡£°";
+                                                sleepcp(1 * 1000);
+                                                system("cls");
+                                            }
+                                        } else {
+                                            if (SearchFliNo(NoorCity, FliRn)) //ø…“‘≤È’“µΩœ‡πÿ–≈œ¢
+                                            {
+                                                cout << "\n≤È’“µΩ“‘œ¬∫Ω∞‡–≈œ¢£∫\n\n";
+                                                //œ‘ æœ‡πÿ∫Ω∞‡
+                                                ShowthisFli(FliRn, 0);
+
+                                                book(FliRn, Nam); //∂©∆±≤Àµ•
+                                            } else {
+                                                cout << "\n≤ÈŒﬁ¥À∫Ω∞‡£°’˝‘⁄∑µªÿ…œ“ª≤Ω...";
+                                                sleepcp(1 * 1000);
+                                                system("cls");
+                                            }
+                                        }
+                                        goto lb6;
+                                    }
+                                    case '4': {//∑µªÿ…œ“ª≤Ω
+                                        system("cls");
+                                        goto lb4;
+                                    }
+                                    default: {//—°œÓ ‰»Î”–ŒÛ
+                                        cout << "\n«Î ‰»Î’˝»∑—°‘Ò£°";
+                                        sleepcp(1 * 1000);
+                                        system("cls");
+                                        goto lb6;
+                                    }
+                                }
+                            case '2':
+                                int n;
+                                if (BookUserExited(Nam, n)) {
+                                    BookInfo thisUserbk;
+                                    fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
+                                    bookinfo.seekg((sizeof(int)) + (n * sizeof(BookInfo), ios::beg));
+                                    bookinfo.read((char *) &thisUserbk, sizeof(BookInfo));
+
+                                    if (thisUserbk.NumOfTPF > 0) {
+
+                                        cout << "\nƒ˙µƒ∂©∆±–≈œ¢»Áœ¬£∫\n";
+                                        showallBookinfo(thisUserbk);
+                                        cout << "\n «∑Ò–Ë“™ÕÀ∆±£ø(1. «£ª2.∑Ò) ";
+                                        cin >> k;
+                                        if (k == 1) {
+                                            int TickNo;
+                                            RetypeNo:
+                                            cout << "«Î ‰»Îƒ˙“™ÕÀ∆±µƒ–Ú∫≈£∫";
+                                            cin >> TickNo;
+                                            if (TickNo <= thisUserbk.NumOfTPF + 1) {
+                                                int RefundNum;
+                                                RetypeTi:
+                                                cout << "«Î ‰»Î–Ë“™ÕÀ∆±µƒ’≈ ˝£∫";
+                                                cin >> RefundNum;
+                                                if (RefundNum < thisUserbk.tpf[TickNo - 1].Tickets) {
+                                                    thisUserbk.tpf[TickNo - 1].Tickets -= RefundNum;
+                                                    cout << "\nÕÀ∆±≥…π¶£°";
+                                                    sleepcp(1 * 1000);
+                                                    system("cls");
+                                                } else if (RefundNum = thisUserbk.tpf[TickNo - 1].Tickets) {
+                                                    for(int i=TickNo-1;i<thisUserbk.NumOfTPF;i++){
+                                                        thisUserbk.tpf[i]=thisUserbk.tpf[i+1];
+                                                    }
+                                                    thisUserbk.NumOfTPF--;
+                                                } else {
+                                                    cout << "ÕÀ∂©’≈ ˝¥Û”⁄“—∂® ˝¡ø£¨«Î÷ÿ–¬ ‰»Î£°" << endl;
+                                                    goto RetypeTi;
+                                                }
+                                                int RefuPosi;
+                                                Flight refufli;
+                                                SearchFliNo(thisUserbk.tpf[TickNo - 1].FliNumber,RefuPosi);
+                                                fstream fliinfo("flinfo.dat",ios::in|ios::out|ios::binary);
+                                                fliinfo.seekg((sizeof(int)) + (RefuPosi * sizeof(Flight)));
+                                                fliinfo.read((char*)&refufli,sizeof(Flight));
+                                                refufli.ChangeSeatNum(refufli.ReturnSeats()+RefundNum);
+                                                fliinfo.seekg((sizeof(int)) + (RefuPosi * sizeof(Flight)));
+                                                fliinfo.write((char*)&refufli,sizeof(Flight));
+                                                fliinfo.close();
+                                                bookinfo.seekg((sizeof(int)) + (n * sizeof(BookInfo), ios::beg));
+                                                bookinfo.write((char*)&thisUserbk,sizeof(BookInfo));
+                                                bookinfo.close();
+                                            } else {
+                                                cout << "–Ú∫≈≤ª¥Ê‘⁄£¨«Î ‰»Î’˝»∑–Ú∫≈£°" << endl;
+                                                goto RetypeNo;
+                                            }
+                                            goto lb2;
+                                        } else if (k == 2) {
+                                            system("cls");
+                                            goto lb6;
+                                        } else {
+                                            system("cls");
+                                            goto lb2;
+                                        }
+                                    }
+                                }
+                                cout<<"ƒ˙ªπŒ¥∂®π˝∆±£¨Œ™ƒ˙∑µªÿ…œ“ª≤Ω...";
+                                system("cls");
+                                goto lb4;
+                            case '3': //∑µªÿ…œ“ª≤Ω
+                                system("cls");
+                                goto lb2;
+
+                            default: //—°œÓ ‰»Î”–ŒÛ
+                                cout << "\n«Î ‰»Î’˝»∑—°‘Ò£°";
+                                sleepcp(1 * 1000);
+                                system("cls");
+                                goto lb4;
+                        }
+                    } else //»Áπ˚√‹¬Î¥ÌŒÛ£¨‘Ú∑µªÿ
+                    {
+                        cout << "\n√‹¬Î¥ÌŒÛ£°«Î÷ÿ–¬µ«¬º°£";
+                        goto lb2;
+                    }
+                    break;
+
+                case '3': //∑µªÿ…œ“ª≤Ω
+                    system("cls");
+                    goto lb1;
+                default: //—°œÓ ‰»Î”–ŒÛ
+                    cout << "\n«Î ‰»Î’˝»∑—°‘Ò£°";
                     sleepcp(1 * 1000);
                     system("cls");
-                    goto lb4;
-                }
-            }
-            else //Â¶ÇÊûúÂØÜÁ†ÅÈîôËØØÔºåÂàôËøîÂõû
-            {
-                cout << "\nÂØÜÁ†ÅÈîôËØØÔºÅËØ∑ÈáçÊñ∞ÁôªÂΩï„ÄÇ";
-                goto lb2;
+                    goto lb2;
             }
             break;
-
-        case '3': //ËøîÂõû‰∏ä‰∏ÄÊ≠•
+        case '3': //ÕÀ≥ˆ∫Ωø’œµÕ≥
+            cout << "\nª∂”≠œ¬¥Œ π”√£°‘Ÿº˚°£\n";
+            sleepcp(1000);
+            break;
+        default: //—°œÓ ‰»Î”–ŒÛ
+            cout << "\n«Î ‰»Î’˝»∑—°‘Ò£°";
+            sleepcp(1000);
             system("cls");
             goto lb1;
-        default: //ÈÄâÈ°πËæìÂÖ•ÊúâËØØ
-            cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÈÄâÊã©ÔºÅ";
-            sleepcp(1 * 1000);
-            system("cls");
-            goto lb2;
-        }
-        break;
-    case '3': //ÈÄÄÂá∫Ëà™Á©∫Á≥ªÁªü
-        cout << "\nÊ¨¢Ëøé‰∏ãÊ¨°‰ΩøÁî®ÔºÅÂÜçËßÅ„ÄÇ\n";
-        sleepcp(1000);
-        break;
-    default: //ÈÄâÈ°πËæìÂÖ•ÊúâËØØ
-        cout << "\nËØ∑ËæìÂÖ•Ê≠£Á°ÆÈÄâÊã©ÔºÅ";
-        sleepcp(1000);
-        system("cls");
-        goto lb1;
     }
 }
 
-int main()
-{
-    int NumOfFlight = 0, NumOfUsers = 0;
+int main() {
+    int NumOfFlight = 0, NumOfUsers = 0, NumOfBookings = 0;
     fstream flightinfo("flinfo.dat", ios::in | ios::out | ios::binary);
-    if (!flightinfo)
-    {
+    if (!flightinfo) {
         flightinfo.open("flinfo.dat", ios::out);
         flightinfo.close();
         flightinfo.open("flinfo.dat", ios::in | ios::out | ios::binary);
     }
 
-    if (IfEmptyFile(flightinfo))
-    {
-        flightinfo.write((char *)&NumOfFlight, sizeof(int));
+    if (IfEmptyFile(flightinfo)) {
+        flightinfo.write((char *) &NumOfFlight, sizeof(int));
     }
     flightinfo.close();
 
     fstream userinfo("userinfo.dat", ios::in | ios::out | ios::binary);
-    if (!userinfo)
-    {
+    if (!userinfo) {
         userinfo.open("userinfo.dat", ios::out);
         userinfo.close();
         userinfo.open("userinfo.dat", ios::in | ios::out | ios::binary);
     }
-    if (IfEmptyFile(userinfo))
-    {
-        userinfo.write((char *)&NumOfUsers, sizeof(int));
+    if (IfEmptyFile(userinfo)) {
+        userinfo.write((char *) &NumOfUsers, sizeof(int));
     }
     userinfo.close();
+
+    fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
+    if (!bookinfo) {
+        bookinfo.open("bookinfo.dat", ios::out);
+        bookinfo.close();
+        bookinfo.open("bookinfo.dat", ios::in | ios::out | ios::binary);
+    }
+    if (IfEmptyFile(bookinfo)) {
+        bookinfo.write((char *) &NumOfBookings, sizeof(int));
+    }
+    bookinfo.close();
 
     ui();
 
     system("pause");
+
     return 0;
 }
