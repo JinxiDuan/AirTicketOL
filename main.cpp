@@ -343,7 +343,7 @@ Status AddFlight()
     outfile.seekg(((sizeof(int)) + (i * sizeof(Flight))), ios::beg);
 
     fli1.Display(); //可删除
-    outfile.write((char*)&fli1, sizeof(fli1));
+    outfile.write((char*)&fli1, sizeof(Flight));
 
     i++;
     outfile.seekg(0, ios::beg);
@@ -458,6 +458,7 @@ Status ModifyDepartC(int n)
     fli2.ChangeDepartC(DepartC);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -474,6 +475,7 @@ Status ModifyLandC(int n)
     fli2.ChangeArrivC(LandC);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -490,6 +492,7 @@ Status ModifyCraft(int n)
     fli2.ChangeCraftT(CraftT);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -506,6 +509,7 @@ Status ModifyPrice(int n)
     fli2.ChangePrice(Pri);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -525,6 +529,7 @@ Status ModifyTime(int n)
     fli2.ChangeArrivalT(ArrivT);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -541,6 +546,7 @@ Status ModifyFliNo(int n)
     fli2.ChangeFlightNo(FliNo);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -557,6 +563,7 @@ Status ModifySeats(int n)
     fli2.ChangeSeatNum(Seats);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
     fsfile.write((char*)&fli2, sizeof(Flight));
+    fsfile.close();
     return OK;
 }
 
@@ -728,7 +735,7 @@ void ShowthisFli(int posi, int n, string fliNo)
 
     fsfile.read((char*)&fli, sizeof(Flight));
 
-    if (fli.ReturnFliNO() == fliNo)
+    if (fli.ReturnFliNO() != fliNo)
     {
         cout << "  " << n + 1 << ".  ";
         fli.Display();
@@ -879,8 +886,8 @@ void book(int thisposi, string username)
             else
             {
                 //用户未预定过该趟航班
-                strcpy_s(bkif2.tpf[NumOfTicbked].FliNumber, fli.ReturnFliNO());
-                bkif2.tpf[NumOfTicbked].Tickets = NumOfTicbked;
+                strcpy_s(bkif2.tpf[bkif2.NumOfTPF].FliNumber, fli.ReturnFliNO());
+                bkif2.tpf[bkif2.NumOfTPF].Tickets = NumOfTicbked;
                 bkif2.NumOfTPF++;
                 fli.ChangeSeatNum(fli.ReturnSeats() - NumOfTicbked);
             }
@@ -1347,7 +1354,7 @@ lb1:
                     cout << "\n**************请选择您要进行的操作**************\n";
                     cout << "\n\t\t1.输入航班号查询\n\n";
                     cout << "\t\t2.输入起飞和降落城市查询\n\n";
-                    cout << "\t\t3.输入航班号或城市模糊查询\n\n";
+                    cout << "\t\t3.进行模糊查询(单个城市或航班号)\n\n";
                     cout << "\t\t4.返回上一步\n\n";
                     cout << "请输入您的选择：";
                     cin >> j;
@@ -1465,7 +1472,7 @@ lb1:
                     {
                         BookInfo thisUserbk;
                         fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
-                        bookinfo.seekg((sizeof(int)) + (n * sizeof(BookInfo), ios::beg));
+                        bookinfo.seekg((sizeof(int)) + (n * sizeof(BookInfo)), ios::beg);
                         bookinfo.read((char*)&thisUserbk, sizeof(BookInfo));
 
                         if (thisUserbk.NumOfTPF > 0)
