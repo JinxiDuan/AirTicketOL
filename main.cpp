@@ -46,7 +46,7 @@ public:
     Flight() {}
 
     Flight(string No, string CraftT, string Departc, string Arrivc, string DepartT, string ArrivT, int SeatsN,
-           double Pri)
+        double Pri)
     {
         strcpy_s(FlightNo, No.c_str());
         strcpy_s(CraftType, CraftT.c_str());
@@ -61,7 +61,7 @@ public:
     void Display()
     {
         cout << FlightNo << "  " << Departcity << "到" << Arrivcity << "  起飞：" << DepartTime << "  落地：" << ArrivTime
-             << "  执飞：" << CraftType << "  余票：" << SeatsNum << "  " << Price << "元" << endl;
+            << "  执飞：" << CraftType << "  余票：" << SeatsNum << "  " << Price << "元" << endl;
     }
 
     bool IfFlightNo(string Num)
@@ -85,7 +85,7 @@ public:
         }
     }
 
-    char *ReturnFliNO()
+    char* ReturnFliNO()
     {
         return FlightNo;
     }
@@ -203,12 +203,12 @@ public:
         return SeatsNum;
     }
 
-    char *ReturnDepartC()
+    char* ReturnDepartC()
     {
         return Departcity;
     }
 
-    char *ReturnArrivC()
+    char* ReturnArrivC()
     {
         return Arrivcity;
     }
@@ -339,17 +339,17 @@ Status AddFlight()
 
     int i = 0;
     outfile.seekg(0, ios::beg);
-    outfile.read((char *)&i, sizeof(int));
+    outfile.read((char*)&i, sizeof(int));
     outfile.seekg(((sizeof(int)) + (i * sizeof(Flight))), ios::beg);
 
     fli1.Display(); //可删除
-    outfile.write((char *)&fli1, sizeof(fli1));
+    outfile.write((char*)&fli1, sizeof(fli1));
 
     i++;
     outfile.seekg(0, ios::beg);
-    outfile.write((char *)&i, sizeof(int)); //航班数加1
+    outfile.write((char*)&i, sizeof(int)); //航班数加1
     outfile.seekg(0, ios::beg);
-    outfile.read((char *)&i, sizeof(int));
+    outfile.read((char*)&i, sizeof(int));
 
     outfile.close();
     return OK;
@@ -366,14 +366,14 @@ Status ShowAllFli()
         abort();
     }
     infile.seekg(0, ios::beg);
-    infile.read((char *)&NumOfFly, sizeof(int));
+    infile.read((char*)&NumOfFly, sizeof(int));
     if (NumOfFly == 0)
         return ABNORMAL;
     infile.seekg(sizeof(int), ios::beg);
     cout << "\n所有航班信息如下：\n\n";
     for (int i = 0; i < NumOfFly; i++)
     {
-        infile.read((char *)&fli2, sizeof(Flight));
+        infile.read((char*)&fli2, sizeof(Flight));
         cout << "   " << i + 1 << ".  ";
         fli2.Display();
         cout << endl;
@@ -382,7 +382,7 @@ Status ShowAllFli()
     return OK;
 }
 
-bool IfEmptyFile(fstream &fstest)
+bool IfEmptyFile(fstream& fstest)
 {
     int i;
     fstest.seekg(0, ios::end);
@@ -397,7 +397,7 @@ bool CheckFliNum(int n)
 {
     int i = 0;
     ifstream infile("flinfo.dat", ios::in | ios::binary);
-    infile.read((char *)&i, sizeof(int));
+    infile.read((char*)&i, sizeof(int));
     infile.close();
     if (n <= i)
         return true;
@@ -408,12 +408,12 @@ bool CheckFliNum(int n)
 Status DeleteFli(int n)
 {
     int i = 0, temp = 0;
-    Flight *fli, flileft;
+    Flight* fli, flileft;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
-    fsfile.read((char *)&i, sizeof(int));
+    fsfile.read((char*)&i, sizeof(int));
     i--;
     fsfile.seekg(0, ios::beg);
-    fsfile.write((char *)&i, sizeof(int)); //使得保存在文件中记录航班数量的int类型减一
+    fsfile.write((char*)&i, sizeof(int)); //使得保存在文件中记录航班数量的int类型减一
     if ((i + 1) == n)
     {
         fsfile.close();
@@ -426,7 +426,7 @@ Status DeleteFli(int n)
 
         for (int k = 0; k < i + 1; k++)
         {
-            fsfile.read((char *)&fli[temp], sizeof(Flight));
+            fsfile.read((char*)&fli[temp], sizeof(Flight));
             temp++;
         } //将整个序列读取到数组中
 
@@ -437,7 +437,7 @@ Status DeleteFli(int n)
             //fli[j].Display();
             if (j == n - 1)
                 continue;
-            fsfile.write((char *)&fli[j], sizeof(Flight));
+            fsfile.write((char*)&fli[j], sizeof(Flight));
         }               //将数组中的数据截断输入到文件中
         delete[] fli;   //释放临时数组
         fsfile.close(); //关闭文件
@@ -452,12 +452,12 @@ Status ModifyDepartC(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入需要替换为的起飞城市:";
     cin >> DepartC;
     fli2.ChangeDepartC(DepartC);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
@@ -468,12 +468,12 @@ Status ModifyLandC(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入需要替换为的降落城市:";
     cin >> LandC;
     fli2.ChangeArrivC(LandC);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
@@ -484,12 +484,12 @@ Status ModifyCraft(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入需要替换为的执飞机型:";
     cin >> CraftT;
     fli2.ChangeCraftT(CraftT);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
@@ -500,12 +500,12 @@ Status ModifyPrice(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入更改后的价格:";
     cin >> Pri;
     fli2.ChangePrice(Pri);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
@@ -516,7 +516,7 @@ Status ModifyTime(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入更改后的的起飞时间:";
     cin >> DepartT;
     cout << "请输入更改后的的降落时间:";
@@ -524,7 +524,7 @@ Status ModifyTime(int n)
     fli2.ChangeDepartT(DepartT);
     fli2.ChangeArrivalT(ArrivT);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
@@ -535,12 +535,12 @@ Status ModifyFliNo(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入更改后的航班号:";
     cin >> FliNo;
     fli2.ChangeFlightNo(FliNo);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
@@ -551,22 +551,22 @@ Status ModifySeats(int n)
     n--;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli2, sizeof(Flight));
+    fsfile.read((char*)&fli2, sizeof(Flight));
     cout << "请输入更改后的座位数:";
     cin >> Seats;
     fli2.ChangeSeatNum(Seats);
     fsfile.seekg((sizeof(int)) + (n * sizeof(Flight)), ios::beg);
-    fsfile.write((char *)&fli2, sizeof(Flight));
+    fsfile.write((char*)&fli2, sizeof(Flight));
     return OK;
 }
 
-bool CheckSameName(string name, int &loca)
+bool CheckSameName(string name, int& loca)
 {
     int n;
     Customer cus;
     fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
     user.seekg(0, ios::beg);
-    user.read((char *)&n, sizeof(int));
+    user.read((char*)&n, sizeof(int));
     if (n == 0)
     {
         user.close();
@@ -576,7 +576,7 @@ bool CheckSameName(string name, int &loca)
     {
         for (int i = 0; i < n; i++)
         {
-            user.read((char *)&cus, sizeof(cus));
+            user.read((char*)&cus, sizeof(cus));
             if (cus.Checkusername(name))
             {
                 loca = i;
@@ -595,14 +595,14 @@ Status RegisterUser(string name, string password)
     Customer cus(name, password);
     fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
     user.seekg(0, ios::beg);
-    user.read((char *)&i, sizeof(int));
+    user.read((char*)&i, sizeof(int));
 
     user.seekg(((sizeof(int)) + (i * sizeof(Customer))), ios::beg);
-    user.write((char *)&cus, sizeof(Customer)); //写入用户
+    user.write((char*)&cus, sizeof(Customer)); //写入用户
 
     i++;
     user.seekg(0, ios::beg);
-    user.write((char *)&i, sizeof(int)); //用户数加一
+    user.write((char*)&i, sizeof(int)); //用户数加一
     user.close();
     return OK;
 } //注册之前要检测用户名与密码长度是否合规
@@ -612,7 +612,7 @@ bool Login(int n, string password)
     Customer cuser;
     fstream user("userinfo.dat", ios::in | ios::out | ios::binary);
     user.seekg(((sizeof(int)) + (n * sizeof(Customer))), ios::beg);
-    user.read((char *)&cuser, sizeof(Customer));
+    user.read((char*)&cuser, sizeof(Customer));
     if (cuser.Checkpassword(password))
     {
         user.close();
@@ -625,16 +625,16 @@ bool Login(int n, string password)
     }
 }
 
-bool SearchFliNo(string FliNo, int &theposi)
+bool SearchFliNo(string FliNo, int& theposi)
 {
     int i;
     Flight tempfli;
     fstream fliserch("flinfo.dat", ios::in | ios::out | ios::binary);
     fliserch.seekg(0, ios::beg);
-    fliserch.read((char *)&i, sizeof(int));
+    fliserch.read((char*)&i, sizeof(int));
     for (int j = 0; j <= i; j++)
     {
-        fliserch.read((char *)&tempfli, sizeof(Flight));
+        fliserch.read((char*)&tempfli, sizeof(Flight));
         if (tempfli.IfFlightNo(FliNo))
         {
             theposi = j;
@@ -646,18 +646,18 @@ bool SearchFliNo(string FliNo, int &theposi)
     return false;
 }
 
-bool SearchFliC(string Departc, string Arrivc, int **Fliarr, int &n)
+bool SearchFliC(string Departc, string Arrivc, int** Fliarr, int& n)
 {
     int i = 0;
     n = 0;
     Flight tempfli;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg(0, ios::beg);
-    fsfile.read((char *)&i, sizeof(int));
+    fsfile.read((char*)&i, sizeof(int));
     *Fliarr = new int[i];
     for (int j = 0; j < i; j++)
     {
-        fsfile.read((char *)&tempfli, sizeof(Flight));
+        fsfile.read((char*)&tempfli, sizeof(Flight));
         if (tempfli.IfDepartCity(Departc) && tempfli.IfArrivCity(Arrivc))
         {
             *(*Fliarr + n) = j;
@@ -677,18 +677,18 @@ bool SearchFliC(string Departc, string Arrivc, int **Fliarr, int &n)
     }
 }
 
-bool SearchFliRC(string City, int **Fliarr, int &n)
+bool SearchFliRC(string City, int** Fliarr, int& n)
 {
     int i = 0;
     n = 0;
     Flight tempfli;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg(0, ios::beg);
-    fsfile.read((char *)&i, sizeof(int));
+    fsfile.read((char*)&i, sizeof(int));
     *Fliarr = new int[i];
     for (int j = 0; j < i; j++)
     {
-        fsfile.read((char *)&tempfli, sizeof(Flight));
+        fsfile.read((char*)&tempfli, sizeof(Flight));
         if (tempfli.IfDepartCity(City) || tempfli.IfArrivCity(City))
         {
             *(*Fliarr + n) = j;
@@ -712,7 +712,7 @@ void ShowthisFli(int posi, int n)
     Flight fli;
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (posi * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli, sizeof(Flight));
+    fsfile.read((char*)&fli, sizeof(Flight));
     cout << "  " << n + 1 << ".  ";
     fli.Display();
     fsfile.close();
@@ -726,7 +726,7 @@ void ShowthisFli(int posi, int n, string fliNo)
 
     fsfile.seekg((sizeof(int)) + (posi * sizeof(Flight)), ios::beg);
 
-    fsfile.read((char *)&fli, sizeof(Flight));
+    fsfile.read((char*)&fli, sizeof(Flight));
 
     if (fli.ReturnFliNO() == fliNo)
     {
@@ -740,13 +740,13 @@ void ShowthisFli(int posi, int n, string fliNo)
     }
 }
 
-static void inputPassword(string &str, int size)
+static void inputPassword(string& str, int size)
 {
     //隐藏密码实现
     size++;
     char c;
     int count = 0;
-    char *password = new char[size]; // 动态申请空间
+    char* password = new char[size]; // 动态申请空间
     while ((c = _getch()) != '\r')
     {
 
@@ -783,17 +783,17 @@ static void inputPassword(string &str, int size)
     cout << endl;
 }
 
-bool BookUserExited(string username, int &userposi)
+bool BookUserExited(string username, int& userposi)
 {
     int allbooknum = 0;
     BookInfo bkif;
     fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary); //打开预定文件
     bookinfo.seekg(0, ios::beg);
-    bookinfo.read((char *)&allbooknum, sizeof(int)); //读取预定数量
+    bookinfo.read((char*)&allbooknum, sizeof(int)); //读取预定数量
     for (int i = 0; i < allbooknum; i++)
     {
         //逐个检验
-        bookinfo.read((char *)&bkif, sizeof(BookInfo));
+        bookinfo.read((char*)&bkif, sizeof(BookInfo));
         if (username == bkif.Username)
         {
             bookinfo.close();
@@ -806,7 +806,7 @@ bool BookUserExited(string username, int &userposi)
     return false;
 }
 
-bool BookNoExited(BookInfo bkif, string fliNo, int &tpfposi)
+bool BookNoExited(BookInfo bkif, string fliNo, int& tpfposi)
 {
     for (int i = 0; i < bkif.NumOfTPF; i++)
     {
@@ -820,7 +820,7 @@ bool BookNoExited(BookInfo bkif, string fliNo, int &tpfposi)
     return false;
 }
 
-void book(int *thisposi, int n, string username);
+void book(int* thisposi, int n, string username);
 
 void book(int thisposi, string username)
 { //订票菜单
@@ -828,7 +828,7 @@ void book(int thisposi, string username)
     int NumOfTicbked = 0;
     int bookn = 0;
     int sentinel = 0;
-    int *thesePosi;
+    int* thesePosi;
     Flight fli;
     char whether;
     cout << "\n是否订票？[Y/N]:";
@@ -852,7 +852,7 @@ void book(int thisposi, string username)
     }
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (thisposi * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&fli, sizeof(Flight));
+    fsfile.read((char*)&fli, sizeof(Flight));
     cout << "请输入订票张数：";
     cin >> NumOfTicbked;
     if (fli.ReturnSeats() >= NumOfTicbked)
@@ -866,7 +866,7 @@ void book(int thisposi, string username)
             int TPFposi;
             fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
             bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
-            bookinfo.read((char *)&bkif2, sizeof(BookInfo));
+            bookinfo.read((char*)&bkif2, sizeof(BookInfo));
             if (BookNoExited(bkif2, fli.ReturnFliNO(), TPFposi))
             {
                 //用户之前预定过该趟航班
@@ -881,13 +881,14 @@ void book(int thisposi, string username)
                 //用户未预定过该趟航班
                 strcpy_s(bkif2.tpf[NumOfTicbked].FliNumber, fli.ReturnFliNO());
                 bkif2.tpf[NumOfTicbked].Tickets = NumOfTicbked;
+                bkif2.NumOfTPF++;
                 fli.ChangeSeatNum(fli.ReturnSeats() - NumOfTicbked);
             }
             fsfile.seekg((sizeof(int)) + (thisposi * sizeof(Flight)), ios::beg);
-            fsfile.write((char *)&fli, sizeof(Flight));
+            fsfile.write((char*)&fli, sizeof(Flight));
             fsfile.close();
             bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
-            bookinfo.write((char *)&bkif2, sizeof(BookInfo));
+            bookinfo.write((char*)&bkif2, sizeof(BookInfo));
             bookinfo.close();
         }
         else
@@ -902,20 +903,22 @@ void book(int thisposi, string username)
             fstream bookinfo("bookinfo.dat", ios::in | ios::binary | ios::out);
 
             bookinfo.seekg(0, ios::beg);
-            bookinfo.read((char *)&bookn, sizeof(int));
+            bookinfo.read((char*)&bookn, sizeof(int));
 
             bookinfo.seekg(0, ios::end);
-            bookinfo.write((char *)&bookhere, sizeof(BookInfo));
+            bookinfo.write((char*)&bookhere, sizeof(BookInfo));
 
             bookn++;
             bookinfo.seekg(0, ios::beg);
-            bookinfo.write((char *)&bookn, sizeof(int));
+            bookinfo.write((char*)&bookn, sizeof(int));
             fsfile.seekg((sizeof(int)) + (thisposi * sizeof(Flight)), ios::beg);
-            fsfile.write((char *)&fli, sizeof(Flight));
+            fsfile.write((char*)&fli, sizeof(Flight));
             fsfile.close();
             bookinfo.close();
         }
         cout << "\n订票成功!";
+        sleepcp(1000);
+        system("cls");
     }
     else
     { //无余票
@@ -936,7 +939,7 @@ void book(int thisposi, string username)
     }
 }
 
-void book(int *thisposi, int n, string username)
+void book(int* thisposi, int n, string username)
 { //多种票类订票菜单
     Flight flirsrved;
     BookInfo bookinfo;
@@ -974,7 +977,7 @@ retry:
 
     fstream fsfile("flinfo.dat", ios::in | ios::out | ios::binary);
     fsfile.seekg((sizeof(int)) + (thisposi[BookNo] * sizeof(Flight)), ios::beg);
-    fsfile.read((char *)&flirsrved, sizeof(Flight));
+    fsfile.read((char*)&flirsrved, sizeof(Flight));
 
     //    strcpy_s(bookinfo.Username, username.c_str());
     //    strcpy_s(bookinfo.tpf[0].FliNumber, flirsrved.ReturnFliNO());
@@ -988,7 +991,7 @@ retry:
             BookInfo bkif2;
             int TPFposi;
             bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
-            bookinfo.read((char *)&bkif2, sizeof(BookInfo));
+            bookinfo.read((char*)&bkif2, sizeof(BookInfo));
             if (BookNoExited(bkif2, flirsrved.ReturnFliNO(), TPFposi))
             {
                 for (int i = 0; i < NumOfTicbked; i++)
@@ -1001,13 +1004,14 @@ retry:
             {
                 strcpy_s(bkif2.tpf[NumOfTicbked].FliNumber, flirsrved.ReturnFliNO());
                 bkif2.tpf[NumOfTicbked].Tickets = NumOfTicbked;
+                bkif2.NumOfTPF++;//增加一个航班数;
                 flirsrved.ChangeSeatNum(flirsrved.ReturnSeats() - NumOfTicbked);
             }
             fsfile.seekg((sizeof(int)) + (thisposi[BookNo] * sizeof(Flight)), ios::beg);
-            fsfile.write((char *)&flirsrved, sizeof(Flight));
+            fsfile.write((char*)&flirsrved, sizeof(Flight));
             fsfile.close();
             bookinfo.seekg((sizeof(int)) + (ExitedBookposi * sizeof(BookInfo)), ios::beg);
-            bookinfo.write((char *)&bkif2, sizeof(BookInfo));
+            bookinfo.write((char*)&bkif2, sizeof(BookInfo));
             bookinfo.close();
         }
         else
@@ -1021,16 +1025,16 @@ retry:
 
             bookinfo.seekg(0, ios::beg);
             int bookn;
-            bookinfo.read((char *)&bookn, sizeof(int));
+            bookinfo.read((char*)&bookn, sizeof(int));
 
             bookinfo.seekg(0, ios::end);
-            bookinfo.write((char *)&bookhere, sizeof(BookInfo));
+            bookinfo.write((char*)&bookhere, sizeof(BookInfo));
 
             bookn++;
             bookinfo.seekg(0, ios::beg);
-            bookinfo.write((char *)&bookn, sizeof(int));
+            bookinfo.write((char*)&bookn, sizeof(int));
             fsfile.seekg((sizeof(int)) + (thisposi[BookNo] * sizeof(Flight)), ios::beg);
-            fsfile.write((char *)&flirsrved, sizeof(Flight));
+            fsfile.write((char*)&flirsrved, sizeof(Flight));
             fsfile.close();
             bookinfo.close();
         }
@@ -1061,21 +1065,21 @@ retry:
     }
 }
 
-bool showallBookinfo(BookInfo userbk)
+void showallBookinfo(BookInfo userbk)
 {
     int posi;
     for (int i = 0; i < userbk.NumOfTPF; i++)
     {
         SearchFliNo(userbk.tpf[i].FliNumber, posi);
         ShowthisFli(posi, i);
-        cout << " 您已订票" << userbk.tpf[i].Tickets << "张";
+        cout << " 您已订票" << userbk.tpf[i].Tickets << "张"<<endl;
     }
 }
 
 void ui()
 { //菜单UI
     string TypeFliNo, TypeDepartC, TypeArrivC;
-    int Fnum = 0, posi1 = 0, posi2 = 0, lastposi = 0, soposi = 0, relatedFlin = 0, *theseposi;
+    int Fnum = 0, posi1 = 0, posi2 = 0, lastposi = 0, soposi = 0, relatedFlin = 0, * theseposi;
     char m, n, p, q, i, j, k;
     string Nam, newNam;
     string Passwd, newPasswd;
@@ -1399,7 +1403,7 @@ lb1:
                     {
                         string NoorCity;
                         int FliRn;
-                        int *ReturnPosi;
+                        int* ReturnPosi;
                         cout << "\n请输入航班号或有关城市：";
                         cin >> NoorCity;
                         if (NoorCity.c_str()[0] < 0)
@@ -1462,7 +1466,7 @@ lb1:
                         BookInfo thisUserbk;
                         fstream bookinfo("bookinfo.dat", ios::in | ios::out | ios::binary);
                         bookinfo.seekg((sizeof(int)) + (n * sizeof(BookInfo), ios::beg));
-                        bookinfo.read((char *)&thisUserbk, sizeof(BookInfo));
+                        bookinfo.read((char*)&thisUserbk, sizeof(BookInfo));
 
                         if (thisUserbk.NumOfTPF > 0)
                         {
@@ -1471,15 +1475,16 @@ lb1:
                             showallBookinfo(thisUserbk);
                             cout << "\n是否需要退票？(1.是；2.否) ";
                             cin >> k;
-                            if (k == 1)
+                            if (k == '1')
                             {
                                 int TickNo;
                             RetypeNo:
                                 cout << "请输入您要退票的序号：";
                                 cin >> TickNo;
-                                if (TickNo <= thisUserbk.NumOfTPF + 1)
+                                if (TickNo < thisUserbk.NumOfTPF + 1)
                                 {
                                     int RefundNum;
+                                    string RefunNo= thisUserbk.tpf[TickNo - 1].FliNumber;
                                 RetypeTi:
                                     cout << "请输入需要退票的张数：";
                                     cin >> RefundNum;
@@ -1497,6 +1502,9 @@ lb1:
                                             thisUserbk.tpf[i] = thisUserbk.tpf[i + 1];
                                         }
                                         thisUserbk.NumOfTPF--;
+                                        cout << "\n退票成功！";
+                                        sleepcp(1 * 1000);
+                                        system("cls");
                                     }
                                     else
                                     {
@@ -1505,16 +1513,16 @@ lb1:
                                     }
                                     int RefuPosi;
                                     Flight refufli;
-                                    SearchFliNo(thisUserbk.tpf[TickNo - 1].FliNumber, RefuPosi);
+                                    SearchFliNo(RefunNo, RefuPosi);
                                     fstream fliinfo("flinfo.dat", ios::in | ios::out | ios::binary);
                                     fliinfo.seekg((sizeof(int)) + (RefuPosi * sizeof(Flight)));
-                                    fliinfo.read((char *)&refufli, sizeof(Flight));
+                                    fliinfo.read((char*)&refufli, sizeof(Flight));
                                     refufli.ChangeSeatNum(refufli.ReturnSeats() + RefundNum);
                                     fliinfo.seekg((sizeof(int)) + (RefuPosi * sizeof(Flight)));
-                                    fliinfo.write((char *)&refufli, sizeof(Flight));
+                                    fliinfo.write((char*)&refufli, sizeof(Flight));
                                     fliinfo.close();
                                     bookinfo.seekg((sizeof(int)) + (n * sizeof(BookInfo), ios::beg));
-                                    bookinfo.write((char *)&thisUserbk, sizeof(BookInfo));
+                                    bookinfo.write((char*)&thisUserbk, sizeof(BookInfo));
                                     bookinfo.close();
                                 }
                                 else
@@ -1522,12 +1530,12 @@ lb1:
                                     cout << "序号不存在，请输入正确序号！" << endl;
                                     goto RetypeNo;
                                 }
-                                goto lb2;
+                                goto lb4;
                             }
-                            else if (k == 2)
+                            else if (k == '2')
                             {
                                 system("cls");
-                                goto lb6;
+                                goto lb4;
                             }
                             else
                             {
@@ -1536,7 +1544,8 @@ lb1:
                             }
                         }
                     }
-                    cout << "您还未定过票，为您返回上一步...";
+                    cout << "您还未订过票，为您返回上一步...";
+                    sleepcp(1 * 1000);
                     system("cls");
                     goto lb4;
                 case '3': //返回上一步
@@ -1592,7 +1601,7 @@ int main()
 
     if (IfEmptyFile(flightinfo))
     {
-        flightinfo.write((char *)&NumOfFlight, sizeof(int));
+        flightinfo.write((char*)&NumOfFlight, sizeof(int));
     }
     flightinfo.close();
 
@@ -1605,7 +1614,7 @@ int main()
     }
     if (IfEmptyFile(userinfo))
     {
-        userinfo.write((char *)&NumOfUsers, sizeof(int));
+        userinfo.write((char*)&NumOfUsers, sizeof(int));
     }
     userinfo.close();
 
@@ -1618,7 +1627,7 @@ int main()
     }
     if (IfEmptyFile(bookinfo))
     {
-        bookinfo.write((char *)&NumOfBookings, sizeof(int));
+        bookinfo.write((char*)&NumOfBookings, sizeof(int));
     }
     bookinfo.close();
 
