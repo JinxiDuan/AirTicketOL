@@ -1502,7 +1502,7 @@ lb1:
                                         sleepcp(1 * 1000);
                                         system("cls");
                                     }
-                                    else if (RefundNum = thisUserbk.tpf[TickNo - 1].Tickets)
+                                    else if (RefundNum == thisUserbk.tpf[TickNo - 1].Tickets)
                                     {
                                         for (int i = TickNo - 1; i < thisUserbk.NumOfTPF; i++)
                                         {
